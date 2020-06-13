@@ -2,6 +2,7 @@ import datetime
 import sys
 
 from flask import Flask, redirect, render_template
+from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
 from wtforms import StringField, TextAreaField
@@ -24,6 +25,8 @@ app.config[
     "SQLALCHEMY_TRACK_MODIFICATIONS"
 ] = False  # This is to do away with a deprecation warning that doesn't affect us
 db = SQLAlchemy(app)
+
+migrate = Migrate(app, db)
 
 
 sign_ins = db.Table(

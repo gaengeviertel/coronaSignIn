@@ -1,8 +1,6 @@
 # Simple Sign-In system to comply with Hamburg, Germany corona regulations
 
-## Development
-
-### Prerequisites
+## Dev Setup
 
 With `direnv` installed, you only need to install pipenv and then you're set.
 
@@ -14,10 +12,11 @@ using `pipenv install`. You can run the project in development mode using
 
 Copy the `config.py.example` to `config.py` and adjust the relevant values.
 
+## Database
+
+Run `flask db upgrade`.
+
+
 ## Deployment
-
-TBD
-
-## Database setup
 
 TBD
