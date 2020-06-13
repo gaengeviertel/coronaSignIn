@@ -1,2 +1,8 @@
+from os.path import dirname
+
 # Create a reasonably secure secret key using `python -c import os; print (os.urandom(128))`
 secret_key = b"INSECURE! CHANGE ME!"
+
+root_path = dirname(__file__)
+
+sqlalchemy_database_uri = f"sqlite:///{root_path}/db.sqlite"

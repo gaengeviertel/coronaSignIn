@@ -2,3 +2,4 @@ config.py
 .mypy_cache
 .venv
 __pycache__
+db.sqlite
