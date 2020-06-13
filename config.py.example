@@ -1,0 +1,2 @@
+# Create a reasonably secure secret key using `python -c import os; print (os.urandom(128))`
+secret_key = b"INSECURE! CHANGE ME!"
