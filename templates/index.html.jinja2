@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <title></title>
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/main.css') }}">
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -24,8 +25,13 @@
   </head>
 
   <body>
-    <!-- Add your site or application content here -->
-    <h1>Fck Corona</h1>
+  <div class="contact-form-container">
+    <h2>Moin lieber Gast!</h2>
+    <span class="description">
+      Aktuell sind wir zum Zweck der Nachverfolgung von Infektionsketten
+      verpflichtet folgende Kontaktdaten unserer Gäste unter Angabe des
+      Datums zu erfassen:
+    </span>
     <form method=POST action>
         {{ form.csrf_token }}
         {{ form.first_name.label }} {{ form.first_name }}
@@ -33,6 +39,7 @@
         {{ form.contact_data.label }} {{ form.contact_data }}
         <input type="submit" value="Jetzt einchecken">
     </form>
+    </div>
     {#
     <script src="js/vendor/modernizr-3.11.2.min.js"></script>
     <script src="js/plugins.js"></script>
