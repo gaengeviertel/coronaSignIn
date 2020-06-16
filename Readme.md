@@ -10,11 +10,12 @@ ToDos:
 
 ## Dev Setup
 
+The application requires Python version 3.8.
 With `direnv` installed, you only need to install pipenv and then you're set.
 
 Otherwise, you need to install `pipenv` first. Then, install the dependencies
 using `pipenv install`. You can run the project in development mode using
-`env FLASK_ENV=development pipenv run flask run`.
+`env FLASK_ENV=development pipenv run flask run`. You will also need to provide the following environment variables: `CORONA_SIGN_IN_SECRET_KEY`, `CORONA_SIGN_IN_DATABASE_URI`.
 
 ## Configuration
 
