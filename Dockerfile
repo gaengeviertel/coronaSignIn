@@ -10,4 +10,4 @@ COPY . /app
 WORKDIR /app
 
 
-CMD ["waitress-serve", "app:app"]
+CMD ["waitress-serve", "--call", "app:create_app"]
