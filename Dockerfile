@@ -19,5 +19,6 @@ RUN pip install waitress psycopg2 -r /requirements.txt
 COPY . /app
 WORKDIR /app
 
+ENV PYTHONPATH=/app/src
 
 CMD ["waitress-serve", "--call", "app:create_app"]

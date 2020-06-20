@@ -3,16 +3,16 @@ import sys
 
 from flask import Flask, redirect, render_template
 
-from coronasignin import sign_ins
-from coronasignin.config import Config
-from coronasignin.db import db
-from coronasignin.migrate import migrate
+import sign_ins
+from config import ProductionConfig
+from db import db
+from migrate import migrate
 
 
-def create_app():
+def create_app(config=None):
     app = Flask(__name__)
 
-    app.config.from_object(Config())
+    app.config.from_object(config if config else ProductionConfig())
 
     db.init_app(app)
     migrate.init_app(app, db)

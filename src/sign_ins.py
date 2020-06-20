@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, TextAreaField
 from wtforms.validators import DataRequired
 
-from coronasignin.db import db
+from db import db
 
 table = db.Table(
     "sign_ins",

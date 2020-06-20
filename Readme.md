@@ -14,14 +14,24 @@ The application requires Python version 3.8.
 With `direnv` installed, you only need to install pipenv and then you're set.
 
 Otherwise, you need to install `pipenv` first. Then, install the dependencies
-using `pipenv install`. You can run the project in development mode using
-`env FLASK_ENV=development pipenv run flask run`. You will also need to provide the following environment variables: `CORONA_SIGN_IN_SECRET_KEY`, `CORONA_SIGN_IN_DATABASE_URI`.
+using `pipenv install`.
+You can run the project in development mode using
+```
+env \
+    FLASK_ENV=development \
+    CORONA_SIGN_IN_SECRET_KEY="insecure secret key" \
+    CORONA_SIGN_IN_DATABASE_URI="sqlite:///${PWD}/db.sqlite" \
+    pipenv run flask run
+```
+
+If you have direnv installed (highly recommended), this will work automatically,
+and you can start the dev server using `flask run`
 
 ### Tests
 
-Run the tests using `pytest`. You can also auto-rerun tests while you're
-changing code with the `tdd.sh` script. It will only re-run tests affected by
-your changes, so it should be a pretty good feedback loop.
+Run the tests using `pipenv run pytest`. You can also auto-rerun tests while
+you're changing code with `pipenv run ./tdd.sh`. It will only re-run tests
+affected by your changes, so it should be a pretty good feedback loop.
 
 ### Style
 
