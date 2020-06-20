@@ -17,6 +17,23 @@ Otherwise, you need to install `pipenv` first. Then, install the dependencies
 using `pipenv install`. You can run the project in development mode using
 `env FLASK_ENV=development pipenv run flask run`. You will also need to provide the following environment variables: `CORONA_SIGN_IN_SECRET_KEY`, `CORONA_SIGN_IN_DATABASE_URI`.
 
+### Tests
+
+Run the tests using `pytest`. You can also auto-rerun tests while you're
+changing code with the `tdd.sh` script. It will only re-run tests affected by
+your changes, so it should be a pretty good feedback loop.
+
+### Style
+
+Use (black)[https://github.com/ambv/black] to format your code. It will be
+installed as part of the dev dependencies.
+
+### Pre-Commit
+
+To automatically run black and check for a few other common issues on commit,
+run `pre-commit install`. It is installed as part of the dev requirements and
+will set everything up. You only ever need to run it once.
+
 ## Configuration
 
 Copy the `config.py.example` to `config.py` and adjust the relevant values.

@@ -4,6 +4,12 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+pre-commit = "*"
+pytest = "*"
+pytest-testmon = "*"
+pytest-watch = "*"
+pytest-flask = "*"
+black = "==19.10b0"
 
 [packages]
 flask = "*"
