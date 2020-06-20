@@ -1,3 +1,4 @@
+![CI](https://github.com/voidus/coronaSignIn/workflows/CI/badge.svg)
 # Simple Sign-In system to comply with Hamburg, Germany corona regulations
 
 Open questions:
