@@ -47,11 +47,7 @@ Run `flask db upgrade`.
 
 ### Building the docker image
 
-Since pipenv is awkward in docker, you need to run `pipenv lock -r
-> requirements.txt` before running `podman build -t corona-sign-in .` (Or
-docker instead of podman if you prefer that)
-
-Don't forget to re-generate requirements.txt if you install new dependencies!
+`podman build -t corona-sign-in .`
 
 ### Migrating the database
 
