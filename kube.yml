@@ -1,0 +1,61 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: corona-sign-in
+
+x-env:
+  - &pg_user
+    name: POSTGRES_USER
+    value: corona-sign-in
+  - &pg_password
+    name: POSTGRES_PASSWORD
+    value: pass
+  - &pg_database
+    name: POSTGRES_DB
+    value: corona-sign-in
+
+
+spec:
+  containers:
+    # necessary when using caddy as a reverse proxy for automatic route creation 
+    # - name: corona-sign-in-route
+    #   image: localhost/podman_caddy
+    #   command: [ 'add', '--forward', 'corona.gaengeviertel.tk:corona-sign-in:8080', '--update', '5' ]
+
+    - name: corona-sign-in-db
+      image: postgres
+      env:
+        - *pg_user
+        - *pg_password
+        - *pg_database
+        - name: PGDATA
+          value: /var/lib/postgresql/data
+      volumeMounts:
+        - name: db
+          mountPath: /var/lib/postgresql/data
+
+    - name: corona-sign-in-app
+      image: localhost/corona-sign-in
+      env:
+        - name: CORONA_SIGN_IN_DATABASE_URI
+          value: postgresql://corona-sign-in:pass@localhost/corona-sign-in
+        - name: CORONA_SIGN_IN_SECRET_KEY
+          value: irrelevant
+      # only necessary for development
+      ports: 
+        - containerPort: 8080
+          hostPort: 8080
+          protocol: tcp
+      volumeMounts:
+        - name: data
+          mountPath: /app
+
+  volumes:
+    - name: db
+      hostPath:
+        path: corona-sign-in-db
+        type: Directory
+    - name: data
+      hostPath:
+        path: corona-sign-in-data
+        type: Directory

@@ -3,7 +3,6 @@
 
 Open questions:
 - Database Backups
-- A better pod definition (kube yaml? would that actually be better?)
 
 ToDos:
 - Make it look nicer
@@ -68,7 +67,7 @@ might need to be installed
 `podman run -e CORONA_SIGN_IN_DATABASE_URI=postgresql://user:pw@host/database
 corona-sign-in flask db upgrade`
 
-### Running the application
+### Running the application manually
 
 1. Build the image
     `podman build -t corona-sign-in .`
@@ -81,6 +80,17 @@ corona-sign-in flask db upgrade`
 5. Run the application
     `podman container run -d --pod corona-sign-in -e CORONA_SIGN_IN_DATABASE_URI="postgresql://corona-sign-in:pass@localhost/corona-sign-in" -e CORONA_SIGN_IN_SECRET_KEY="irrelevant" corona-sign-in`
 
+### Running the application using the kube file
+
+1. Build the image
+    `podman build -t corona-sign-in .`
+2. Load the kube file
+    `podman play kube kube.yml`
+3. Migrate the database
+    `podman container run --rm --pod corona-sign-in -e CORONA_SIGN_IN_DATABASE_URI="postgresql://corona-sign-in:pass@localhost/corona-sign-in" -e CORONA_SIGN_IN_SECRET_KEY="irrelevant" corona-sign-in flask db upgrade`
+4. Restart the application container
+    `podman podman restart corona-sign-in-app`
+
 #### Get a database shell
 
-podman container run -ti --rm --pod corona-sign-in postgres -h localhost -U corona-sign-in corona-sign-in
+`podman container run -ti --rm --pod corona-sign-in postgres -h localhost -U corona-sign-in corona-sign-in`
