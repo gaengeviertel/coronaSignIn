@@ -17,13 +17,8 @@ x-env:
 
 spec:
   containers:
-    # necessary when using caddy as a reverse proxy for automatic route creation 
-    # - name: corona-sign-in-route
-    #   image: localhost/podman_caddy
-    #   command: [ 'add', '--forward', 'corona.gaengeviertel.tk:corona-sign-in:8080', '--update', '5' ]
-
     - name: corona-sign-in-db
-      image: postgres
+      image: postgres:12
       env:
         - *pg_user
         - *pg_password
@@ -41,7 +36,6 @@ spec:
           value: postgresql://corona-sign-in:pass@localhost/corona-sign-in
         - name: CORONA_SIGN_IN_SECRET_KEY
           value: irrelevant
-      # only necessary for development
       ports: 
         - containerPort: 8080
           hostPort: 8080

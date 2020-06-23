@@ -85,11 +85,9 @@ corona-sign-in flask db upgrade`
 1. Build the image
     `podman build -t corona-sign-in .`
 2. Load the kube file
-    `podman play kube kube.yml`
+    `podman play kube kube-dev.yml`
 3. Migrate the database
-    `podman container run --rm --pod corona-sign-in -e CORONA_SIGN_IN_DATABASE_URI="postgresql://corona-sign-in:pass@localhost/corona-sign-in" -e CORONA_SIGN_IN_SECRET_KEY="irrelevant" corona-sign-in flask db upgrade`
-4. Restart the application container
-    `podman podman restart corona-sign-in-app`
+    `podman exec corona-sign-in-app flask db upgrade`
 
 #### Get a database shell
 
