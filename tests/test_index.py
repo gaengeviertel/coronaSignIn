@@ -54,6 +54,7 @@ def test_form_data_is_saved_to_database(selenium, db_session):
 
     selenium.find_element_by_xpath('//input[@type="submit"]').click()
 
+    # ensure the result page has loaded
     selenium.find_element_by_xpath('//*[text()="thank you!"]')
 
     assert list(
@@ -107,24 +108,115 @@ def test_form_is_filled_from_localstorage(selenium):
     )
 
 
-@mark.usefixtures("live_server", "_db")
+@mark.usefixtures("live_server")
 @mark.slow
-def test_localstorage_is_populated_on_form_submit(selenium):
-    index_url = url_for("index", _external=True)
-    selenium.get(index_url)
+def test_localstorage_is_cleared_if_saving_not_selected(selenium):
+    selenium.get(url_for("index", _external=True))
     selenium.execute_script("window.localStorage.clear()")
+    selenium.execute_script(
+        """
+        window.localStorage.setItem('saved-form', JSON.stringify({
+            first_name: "Jules",
+            last_name: "Joseph",
+            contact_data: "Go to the sea and shout"
+        }));
+    """
+    )
+    selenium.get(url_for("index", _external=True))
+
+    assert (
+        selenium.execute_script(
+            "return JSON.parse(window.localStorage.getItem('saved-form'))"
+        )
+        is not None
+    )
 
     selenium.find_element_by_name("first_name").send_keys("Octave")
     selenium.find_element_by_name("last_name").send_keys("Garnier")
     selenium.find_element_by_name("contact_data").send_keys("555-12345")
 
+    save_for_next_time = selenium.find_element_by_id("save_for_next_time")
     assert (
-        selenium.execute_script("return window.localStorage.getItem('saved-form')")
+        save_for_next_time.is_selected()
+    ), "assumed save_for_next_time would be checked since we have data in localStorage"
+    save_for_next_time.click()
+
+    selenium.find_element_by_xpath('//input[@type="submit"]').click()
+
+    # ensure the result page has loaded
+    selenium.find_element_by_xpath('//*[text()="thank you!"]')
+
+    assert (
+        selenium.execute_script(
+            "return JSON.parse(window.localStorage.getItem('saved-form'))"
+        )
         is None
     )
 
+
+@mark.usefixtures("live_server")
+@mark.slow
+def test_localstorage_is_not_populated_on_form_submit_by_default(selenium):
+    selenium.get(url_for("index", _external=True))
+    selenium.execute_script("window.localStorage.clear()")
+
+    selenium.get(url_for("index", _external=True))
+    selenium.find_element_by_name("first_name").send_keys("Octave")
+    selenium.find_element_by_name("last_name").send_keys("Garnier")
+    selenium.find_element_by_name("contact_data").send_keys("555-12345")
+
     selenium.find_element_by_xpath('//input[@type="submit"]').click()
+
+    # ensure the result page has loaded
+    selenium.find_element_by_xpath('//*[text()="thank you!"]')
+
+    assert (
+        selenium.execute_script(
+            "return JSON.parse(window.localStorage.getItem('saved-form'))"
+        )
+        is None
+    )
+
+
+@mark.usefixtures("live_server")
+@mark.slow
+def test_localstorage_is_populated_on_form_submit_if_selected(selenium):
+    selenium.get(url_for("index", _external=True))
+    selenium.execute_script("window.localStorage.clear()")
+
+    selenium.find_element_by_name("first_name").send_keys("Octave")
+    selenium.find_element_by_name("last_name").send_keys("Garnier")
+    selenium.find_element_by_name("contact_data").send_keys("555-12345")
+    selenium.find_element_by_id("save_for_next_time").click()
+
+    selenium.find_element_by_xpath('//input[@type="submit"]').click()
+
+    # ensure the result page has loaded
+    selenium.find_element_by_xpath('//*[text()="thank you!"]')
 
     assert selenium.execute_script(
         "return JSON.parse(window.localStorage.getItem('saved-form'))"
     ) == {"first_name": "Octave", "last_name": "Garnier", "contact_data": "555-12345"}
+
+
+@mark.usefixtures("live_server")
+@mark.slow
+def test_save_for_next_time_is_preselected_iff_data_was_stored(selenium):
+    selenium.get(url_for("index", _external=True))
+    selenium.execute_script("window.localStorage.clear()")
+
+    selenium.get(url_for("index", _external=True))
+    assert not selenium.find_element_by_id("save_for_next_time").is_selected()
+
+    selenium.execute_script(
+        """
+        window.localStorage.setItem('saved-form', JSON.stringify({
+            first_name: "Jules",
+            last_name: "Joseph",
+            contact_data: "Go to the sea and shout"
+        }));
+    """
+    )
+    selenium.get(url_for("index", _external=True))
+
+    assert selenium.find_element_by_id("save_for_next_time").is_selected()
