@@ -4,3 +4,4 @@ __pycache__
 db.sqlite
 requirements.txt
 .testmondata
+testing.sqlite

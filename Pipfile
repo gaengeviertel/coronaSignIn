@@ -12,6 +12,7 @@ pytest-flask = "*"
 black = "==19.10b0"
 selenium = "*"
 pytest-selenium = "*"
+pytest-flask-sqlalchemy = "*"
 
 [packages]
 flask = "*"
