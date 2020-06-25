@@ -65,6 +65,17 @@ h2 {
   text-transform: uppercase;
 }
 
+a {
+  color: #e31d17;
+  text-decoration: none;
+  font-size: 0.8125rem;
+}
+
+a:hover,
+a:focus {
+  text-decoration: underline;
+}
+
 .header-container {
   margin: 1.5rem auto;
   width: 100%;
@@ -88,4 +99,10 @@ h2 {
   font-size: 0.8125rem;
   text-align: center;
   display: block;
+}
+
+.footer-container {
+  max-width: 90%;
+  margin: 0 auto 1.5rem;
+  text-align: center;
 }
