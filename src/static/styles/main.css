@@ -32,7 +32,8 @@ textarea {
 input:focus,
 textarea:focus {
   outline: none;
-  border-bottom: 1px solid #5baddb;
+  border-bottom: 1px solid #fea;
+  background-color: #fea;
 }
 
 input[type="submit"] {
