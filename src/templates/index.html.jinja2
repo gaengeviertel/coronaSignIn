@@ -46,7 +46,7 @@
     <script src="js/main.js"></script>
     #}
     <script>
-      window.onload = () => {
+      window.onload = function() {
         const storedData = JSON.parse(window.localStorage.getItem('saved-form'));
         if (storedData !== null && typeof storedData === 'object') {
           if (storedData.first_name) {
@@ -59,6 +59,15 @@
             document.getElementById("contact_data").value = storedData.contact_data;
           }
         }
+
+        document.getElementsByTagName('form')[0].addEventListener('submit', function() {
+          window.localStorage.setItem('saved-form', JSON.stringify({
+            first_name: document.getElementById("first_name").value,
+            last_name: document.getElementById("last_name").value,
+            contact_data: document.getElementById("contact_data").value,
+          }))
+        })
+
       }
     </script>
   </body>

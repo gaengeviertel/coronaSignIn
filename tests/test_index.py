@@ -105,3 +105,26 @@ def test_form_is_filled_from_localstorage(selenium):
         selenium.find_element_by_name("contact_data").get_attribute("value")
         == "Go to the sea and shout"
     )
+
+
+@mark.usefixtures("live_server", "_db")
+@mark.slow
+def test_localstorage_is_populated_on_form_submit(selenium):
+    index_url = url_for("index", _external=True)
+    selenium.get(index_url)
+    selenium.execute_script("window.localStorage.clear()")
+
+    selenium.find_element_by_name("first_name").send_keys("Octave")
+    selenium.find_element_by_name("last_name").send_keys("Garnier")
+    selenium.find_element_by_name("contact_data").send_keys("555-12345")
+
+    assert (
+        selenium.execute_script("return window.localStorage.getItem('saved-form')")
+        is None
+    )
+
+    selenium.find_element_by_xpath('//input[@type="submit"]').click()
+
+    assert selenium.execute_script(
+        "return JSON.parse(window.localStorage.getItem('saved-form'))"
+    ) == {"first_name": "Octave", "last_name": "Garnier", "contact_data": "555-12345"}
