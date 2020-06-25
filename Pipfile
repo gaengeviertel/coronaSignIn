@@ -10,6 +10,8 @@ pytest-testmon = "*"
 pytest-watch = "*"
 pytest-flask = "*"
 black = "==19.10b0"
+selenium = "*"
+pytest-selenium = "*"
 
 [packages]
 flask = "*"
