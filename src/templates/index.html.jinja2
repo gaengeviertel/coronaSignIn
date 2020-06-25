@@ -25,13 +25,12 @@
   </head>
 
   <body>
-  <div class="contact-form-container">
+  <div class="header-container">
+  <img src="/static/images/logo.svg" alt="Komm in die Gänge" class="logo"  />
     <h2>Moin lieber Gast!</h2>
-    <span class="description">
-      Aktuell sind wir zum Zweck der Nachverfolgung von Infektionsketten
-      verpflichtet folgende Kontaktdaten unserer Gäste unter Angabe des
-      Datums zu erfassen:
-    </span>
+    <span class="description">Aktuell sind wir zum Zweck der Nachverfolgung von Infektionsketten verpflichtet folgende Kontaktdaten unserer Gäste unter Angabe des Datums zu erfassen:</span>
+  </div>
+  <div class="contact-form-container">
     <form method=POST action>
         {{ form.csrf_token }}
         {{ form.first_name.label }} {{ form.first_name }}

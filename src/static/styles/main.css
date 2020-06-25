@@ -5,6 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: #424242;
 }
 
 form {
@@ -16,14 +17,15 @@ textarea {
   box-sizing: border-box;
   background: none;
   background-color: white;
-  color: gray;
+  font-family: Arial, Helvetica, sans-serif;
   font-size: 1.2rem;
+  font-weight: bold;
   padding: 0.5rem;
   display: block;
   width: 100%;
   border: none;
   border-radius: 0;
-  border-bottom: 1px solid gray;
+  border-bottom: 1px solid #424242;
   margin: 0.5rem 0 3rem;
 }
 
@@ -34,30 +36,55 @@ textarea:focus {
 }
 
 input[type="submit"] {
-  background-color: #5baddb;
-  border: 3px solid #5baddb;
+  background-color: #e31d17;
+  border: 3px solid #e31d17;
   color: white;
   cursor: pointer;
+  font-size: 1rem;
 }
 
 input[type="submit"]:hover {
   background-color: transparent;
-  color: #5baddb;
+  color: #e31d17;
 }
 
 label {
-  color: gray;
   font-size: 1rem;
   font-weight: normal;
   pointer-events: none;
 }
 
+h2 {
+  font-family: NobileBold, Arial, Helvetica;
+  font-size: 1.2rem;
+  margin: 1rem auto;
+  color: #111111;
+  border-bottom: 3px solid #111111;
+  line-height: 1.75rem;
+  text-transform: uppercase;
+}
+
+.header-container {
+  margin: 1.5rem auto;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  max-width: 90%;
+}
+
+.logo {
+  height: 8rem;
+}
+
 .contact-form-container {
-  margin: 2rem auto;
+  margin: 1.5rem auto;
   width: 500px;
   max-width: 90%;
 }
 
 .description {
-  font-size: 1rem;
+  font-size: 0.8125rem;
+  text-align: center;
+  display: block;
 }
