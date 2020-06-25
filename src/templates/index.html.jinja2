@@ -45,5 +45,21 @@
     <script src="js/plugins.js"></script>
     <script src="js/main.js"></script>
     #}
+    <script>
+      window.onload = () => {
+        const storedData = JSON.parse(window.localStorage.getItem('saved-form'));
+        if (storedData !== null && typeof storedData === 'object') {
+          if (storedData.first_name) {
+            document.getElementById("first_name").value = storedData.first_name;
+          }
+          if (storedData.last_name) {
+            document.getElementById("last_name").value = storedData.last_name;
+          }
+          if (storedData.contact_data) {
+            document.getElementById("contact_data").value = storedData.contact_data;
+          }
+        }
+      }
+    </script>
   </body>
 </html>
