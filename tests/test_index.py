@@ -15,6 +15,7 @@ def test_headline_exists(client):
     assert b"Moin lieber Gast!" in page.data
 
 
+@freeze_time("2020-03-21")
 def test_db(app, db_session):
     db.session.execute(
         sign_ins.table.insert().values(
@@ -30,7 +31,7 @@ def test_db(app, db_session):
         ("first_name", "f"),
         ("last_name", "l"),
         ("contact_data", "c"),
-        ("date", date(2020, 6, 25)),
+        ("date", date(2020, 3, 21)),
     ]
 
 
@@ -68,7 +69,8 @@ def test_form_data_is_saved_to_database(selenium, db_session):
             ("first_name", "Octave"),
             ("last_name", "Garnier"),
             ("contact_data", "555-12345"),
-            ("date", date(2020, 6, 25)),
+            # We cannot freeze live_server's time because it runs in a separate process
+            ("date", date.today()),
         ]
     ]
 
