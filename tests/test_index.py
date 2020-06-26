@@ -1,5 +1,6 @@
 from datetime import date
 
+from freezegun import freeze_time
 from flask import url_for
 from pytest import fail, mark
 from selenium.common.exceptions import NoSuchElementException

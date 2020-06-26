@@ -3,6 +3,12 @@ import pytest
 from app import create_app, db
 from config import TestConfig
 
+import multiprocessing
+
+# This is needed to make the tests work on py3.8 + macOS catalina
+# See https://github.com/pytest-dev/pytest-flask/issues/104
+multiprocessing.set_start_method("fork")
+
 
 @pytest.fixture(scope="session")
 def app():
