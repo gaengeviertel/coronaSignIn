@@ -5,3 +5,4 @@ db.sqlite
 requirements.txt
 .testmondata
 testing.sqlite
+.DS_Store

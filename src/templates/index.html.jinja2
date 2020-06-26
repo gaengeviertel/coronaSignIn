@@ -29,14 +29,13 @@
   </head>
 
   <body>
-    <div class="contact-form-container">
-      <h2>Moin lieber Gast!</h2>
-      <span class="description">
-        Aktuell sind wir zum Zweck der Nachverfolgung von Infektionsketten
-        verpflichtet folgende Kontaktdaten unserer Gäste unter Angabe des Datums
-        zu erfassen:
-      </span>
-      <form method="POST" action>
+  <div class="header-container">
+  <img src="/static/images/logo.svg" alt="Komm in die Gänge" class="logo"  />
+    <h2>Moin lieber Gast!</h2>
+    <span class="description">Aktuell sind wir zum Zweck der Nachverfolgung von Infektionsketten verpflichtet folgende Kontaktdaten unserer Gäste unter Angabe des Datums zu erfassen:</span>
+  </div>
+  <div class="contact-form-container">
+    <form method=POST action>
         {{ form.csrf_token }}
         {{ form.first_name.label }} {{ form.first_name }}
         {{ form.last_name.label }} {{ form.last_name }}
@@ -46,7 +45,10 @@
         >
         <input id="save_for_next_time" type="checkbox" />
         <input type="submit" value="Jetzt einchecken" />
-      </form>
+    </form>
+    </div>
+    <div class="footer-container">
+      <a href="https://das-gaengeviertel.info/meta/impressum.html">Impressum</a>
     </div>
     {#
     <script src="js/vendor/modernizr-3.11.2.min.js"></script>
