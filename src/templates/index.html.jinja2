@@ -37,10 +37,10 @@
         {{ form.first_name.label }} {{ form.first_name }}
         {{ form.last_name.label }} {{ form.last_name }}
         {{ form.contact_data.label }} {{ form.contact_data }}
-        <label for="save_for_next_time"
-          >Daten fürs nächste Mal auf diesem Gerät speichern</label
-        >
-        <input id="save_for_next_time" type="checkbox" />
+        <div  class="checkbox-group"> 
+          <input id="save_for_next_time" type="checkbox" />
+          <label for="save_for_next_time">Daten fürs nächste Mal auf diesem Gerät speichern</label>
+        </div>
         <input type="submit" value="Jetzt einchecken" />
     </form>
     </div>
