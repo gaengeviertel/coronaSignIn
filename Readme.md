@@ -33,6 +33,9 @@ Run the tests using `pipenv run pytest`. You can also auto-rerun tests while
 you're changing code with `pipenv run ./tdd.sh`. It will only re-run tests
 affected by your changes, so it should be a pretty good feedback loop.
 
+Note: You need to have chromedriver installed for the selenium tests. If that is
+not the case, you can run all non-selenium tests using `pytest -m 'not slow'`
+
 ### Style
 
 Use (black)[https://github.com/ambv/black] to format your code. It will be
