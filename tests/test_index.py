@@ -15,6 +15,11 @@ def test_headline_exists(client):
     assert b"Moin lieber Gast!" in page.data
 
 
+def test_success_page_has_content(client):
+    page = client.get("/thank-you")
+    assert b"Danke" in page.data
+
+
 @freeze_time("2020-03-21")
 def test_db(app, db_session):
     db.session.execute(
@@ -57,7 +62,7 @@ def test_form_data_is_saved_to_database(selenium, db_session):
     selenium.find_element_by_xpath('//input[@type="submit"]').click()
 
     # ensure the result page has loaded
-    selenium.find_element_by_xpath('//*[text()="thank you!"]')
+    selenium.find_element_by_xpath('//*[text()="Danke"]')
 
     assert list(
         map(
@@ -147,7 +152,7 @@ def test_localstorage_is_cleared_if_saving_not_selected(selenium):
     selenium.find_element_by_xpath('//input[@type="submit"]').click()
 
     # ensure the result page has loaded
-    selenium.find_element_by_xpath('//*[text()="thank you!"]')
+    selenium.find_element_by_xpath('//*[text()="Danke"]')
 
     assert (
         selenium.execute_script(
@@ -171,7 +176,7 @@ def test_localstorage_is_not_populated_on_form_submit_by_default(selenium):
     selenium.find_element_by_xpath('//input[@type="submit"]').click()
 
     # ensure the result page has loaded
-    selenium.find_element_by_xpath('//*[text()="thank you!"]')
+    selenium.find_element_by_xpath('//*[text()="Danke"]')
 
     assert (
         selenium.execute_script(
@@ -195,7 +200,7 @@ def test_localstorage_is_populated_on_form_submit_if_selected(selenium):
     selenium.find_element_by_xpath('//input[@type="submit"]').click()
 
     # ensure the result page has loaded
-    selenium.find_element_by_xpath('//*[text()="thank you!"]')
+    selenium.find_element_by_xpath('//*[text()="Danke"]')
 
     assert selenium.execute_script(
         "return JSON.parse(window.localStorage.getItem('saved-form'))"

@@ -35,6 +35,6 @@ def create_app(config=None):
 
     @app.route("/thank-you")
     def thank_you():
-        return "thank you!"
+        return render_template("success-page.html.jinja2")
 
     return app
