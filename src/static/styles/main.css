@@ -86,7 +86,7 @@ a:focus {
 
 .header-container {
   margin: 1.5rem auto;
-  width: 100%;
+  width: 500px;
   display: flex;
   justify-content: center;
   flex-direction: column;

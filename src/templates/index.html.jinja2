@@ -2,27 +2,11 @@
 <html class="no-js" lang="">
   <head>
     <meta charset="utf-8" />
-    <title></title>
+    <title>Coronaschutz</title>
     <link rel="stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/main.css') }}">
     <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico')}}">
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-    {#
-    <meta property="og:title" content="" />
-    <meta property="og:type" content="" />
-    <meta property="og:url" content="" />
-    <meta property="og:image" content="" />
-
-    <link rel="manifest" href="site.webmanifest" />
-    <link rel="apple-touch-icon" href="icon.png" />
-    <!-- Place favicon.ico in the root directory -->
-
-    <link rel="stylesheet" href="css/normalize.css" />
-    <link rel="stylesheet" href="css/main.css" />
-
-    <meta name="theme-color" content="#fafafa" />
-    #}
   </head>
 
   <body>
@@ -37,7 +21,7 @@
         {{ form.first_name.label }} {{ form.first_name }}
         {{ form.last_name.label }} {{ form.last_name }}
         {{ form.contact_data.label }} {{ form.contact_data }}
-        <div  class="checkbox-group"> 
+        <div  class="checkbox-group">
           <input id="save_for_next_time" type="checkbox" />
           <label for="save_for_next_time">Daten fürs nächste Mal auf diesem Gerät speichern</label>
         </div>
@@ -47,11 +31,6 @@
     <div class="footer-container">
       <a href="https://das-gaengeviertel.info/meta/impressum.html">Impressum</a>
     </div>
-    {#
-    <script src="js/vendor/modernizr-3.11.2.min.js"></script>
-    <script src="js/plugins.js"></script>
-    <script src="js/main.js"></script>
-    #}
     <script>
       window.onload = function () {
         const storedData = JSON.parse(
