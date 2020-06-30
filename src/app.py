@@ -1,5 +1,4 @@
 import datetime
-import sys
 
 from flask import Flask, redirect, render_template
 
