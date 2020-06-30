@@ -24,3 +24,6 @@ jobs:
 
       - name: Test with pytest
         run: pipenv run pytest -v
+
+      - name: Test the built docker image
+        run: pipenv run invoke containertests

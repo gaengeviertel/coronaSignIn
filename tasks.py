@@ -12,3 +12,8 @@ def tdd(c):
 @task
 def test(c):
     c.run("pytest")
+
+
+@task
+def containertests(c):
+    c.run("pytest tests_container")

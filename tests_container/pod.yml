@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: corona-sign-in-automatic-test
+
+spec:
+  containers:
+    - name: db
+      image: postgres:12
+      env:
+        - name: POSTGRES_USER
+          value: corona-sign-in
+        - name: POSTGRES_PASSWORD
+          value: test-password
+        - name: POSTGRES_DB
+          value: corona-sign-in
+
+    - name: app
+      image: localhost/corona-sign-in-automatic-test
+      env:
+        - name: CORONA_SIGN_IN_DATABASE_URI
+          value: postgresql://corona-sign-in:test-password@localhost/corona-sign-in
+        - name: CORONA_SIGN_IN_SECRET_KEY
+          value: insecure_secret_key
+      ports:
+        - containerPort: 8080
+          hostPort: 9178
+          protocol: tcp
