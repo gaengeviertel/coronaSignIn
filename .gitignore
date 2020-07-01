@@ -1,9 +1,15 @@
+# Most of the things in here should also be in .dockerignore
+
+# SQLite dbs
+*.sqlite
+
+# Python stuff
+__pycache__
 .mypy_cache
 .venv
-__pycache__
-db.sqlite
 requirements.txt
 .testmondata
-testing.sqlite
+
+# Various stuff
 .DS_Store
 .vscode

@@ -1,0 +1,40 @@
+# Most of the things in here should also be in .gitignore
+
+# Documentation
+CODE_OF_CONDUCT.md
+**/Readme.md
+**/README
+
+# SQLite dbs
+**/*.sqlite
+
+# Developer conveniences
+kube-dev.yml
+tasks.py
+**/*.nix
+.pre-commit-config.yaml
+.env
+.envrc
+
+# Python stuff
+**/__pycache__
+.mypy_cache
+.venv
+requirements.txt
+.testmondata
+.pytest_cache
+
+
+# Tests
+pytest.ini
+tests
+tests_container
+
+# Various stuff
+.vscode
+.DS_STORE
+.git
+.dockerignore
+.github
+.gitignore
+.vimrc.local
