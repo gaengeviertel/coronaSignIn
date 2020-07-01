@@ -60,7 +60,6 @@ input[type="submit"]:hover {
 label {
   font-size: 1rem;
   font-weight: normal;
-  pointer-events: none;
 }
 
 h2 {
@@ -119,6 +118,11 @@ a:focus {
   display: flex;
   align-items: center;
   margin: 2rem 0;
+}
+
+.checkbox-group > label,
+.checkbox-group > input {
+  cursor: pointer;
 }
 
 .image-container {
