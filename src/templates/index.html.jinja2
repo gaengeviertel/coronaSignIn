@@ -18,14 +18,31 @@
   <div class="contact-form-container">
     <form method=POST action>
         {{ form.csrf_token }}
-        {{ form.first_name.label }} {{ form.first_name }}
-        {{ form.last_name.label }} {{ form.last_name }}
-        {{ form.contact_data.label }} {{ form.contact_data }}
-        <div  class="checkbox-group">
-          <input id="save_for_next_time" type="checkbox" />
-          <label for="save_for_next_time">Daten fürs nächste Mal auf diesem Gerät speichern</label>
-        </div>
-        <input type="submit" value="Jetzt einchecken" />
+      {% macro render_field(field) %}
+        {# Based on code from https://wtforms.readthedocs.io/en/stable/specific_problems/ #}
+        {{ field.label }}
+        {% if field.errors %}
+          <ul class="errors">
+            {% for error in field.errors %}
+              <li>{{ error|e }}</li>
+            {% endfor %}
+          </ul>
+          {% set css_class = 'has_error ' + kwargs.pop('class', '') %}
+          {{ field(class=css_class, **kwargs) }}
+        {% else %}
+          {{ field(**kwargs) }}
+        {% endif %}
+      {% endmacro %}
+      {{ render_field(form.first_name) }}
+      {{ render_field(form.last_name) }}
+      {{ render_field(form.contact_data) }}
+      <div  class="checkbox-group">
+        <input id="save_for_next_time" type="checkbox" />
+        <label for="save_for_next_time">
+          Daten fürs nächste Mal auf diesem Gerät speichern
+        </label>
+      </div>
+      <input type="submit" value="Jetzt einchecken" />
     </form>
     </div>
     <div class="footer-container">
