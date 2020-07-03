@@ -3,9 +3,7 @@ import os
 
 
 class ProductionConfig:
-    @property
-    def SECRET_KEY(self):
-        return os.environ["CORONA_SIGN_IN_SECRET_KEY"]
+    WTF_CSRF_ENABLED = False
 
     @property
     def SQLALCHEMY_DATABASE_URI(self):

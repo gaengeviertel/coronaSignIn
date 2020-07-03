@@ -1,7 +1,8 @@
 from datetime import date
 
-from freezegun import freeze_time
+import requests
 from flask import url_for
+from freezegun import freeze_time
 from pytest import fail, mark
 from selenium.common.exceptions import NoSuchElementException
 from sqlalchemy import select
@@ -22,6 +23,8 @@ def test_success_page_has_content(client):
 
 @freeze_time("2020-03-21")
 def test_db(app, db_session):
+    # This test is not used yet, but it shows that the db_session works. Let's keep it
+    # around until we use the db in another test
     db.session.execute(
         sign_ins.table.insert().values(
             first_name="f", last_name="l", contact_data="c", date=date.today()
@@ -38,6 +41,21 @@ def test_db(app, db_session):
         ("contact_data", "c"),
         ("date", date(2020, 3, 21)),
     ]
+
+
+@mark.usefixtures("live_server")
+def test_no_cookies():
+    response = requests.get(url_for("index", _external=True))
+    assert "set-cookie" not in response.headers
+
+    response = requests.post(
+        url_for("index", _external=True),
+        data={"first_name": "zxcv", "last_name": "asdf", "contact_data": "qwer"},
+    )
+    assert "set-cookie" not in response.headers
+
+    response = requests.get(url_for("thank_you", _external=True))
+    assert "set-cookie" not in response.headers
 
 
 @mark.usefixtures("live_server")
