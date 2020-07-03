@@ -17,7 +17,7 @@
     <span class="description">Aktuell sind wir zum Zweck der Nachverfolgung von Infektionsketten verpflichtet folgende Kontaktdaten unserer Gäste unter Angabe des Datums zu erfassen:</span>
   </div>
   <div class="contact-form-container">
-    <form method=POST action>
+    <form method=POST action novalidate>
       {{ form.csrf_token }}
       {{ render_field(form.first_name) }}
       {{ render_field(form.last_name) }}
