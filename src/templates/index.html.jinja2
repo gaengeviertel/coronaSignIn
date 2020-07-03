@@ -1,3 +1,4 @@
+{% from "_render_field.html.jinja2" import render_field %}
 <!DOCTYPE html>
 <html class="no-js" lang="">
   <head>
@@ -17,22 +18,7 @@
   </div>
   <div class="contact-form-container">
     <form method=POST action>
-        {{ form.csrf_token }}
-      {% macro render_field(field) %}
-        {# Based on code from https://wtforms.readthedocs.io/en/stable/specific_problems/ #}
-        {{ field.label }}
-        {% if field.errors %}
-          <ul class="errors">
-            {% for error in field.errors %}
-              <li>{{ error|e }}</li>
-            {% endfor %}
-          </ul>
-          {% set css_class = 'has_error ' + kwargs.pop('class', '') %}
-          {{ field(class=css_class, **kwargs) }}
-        {% else %}
-          {{ field(**kwargs) }}
-        {% endif %}
-      {% endmacro %}
+      {{ form.csrf_token }}
       {{ render_field(form.first_name) }}
       {{ render_field(form.last_name) }}
       {{ render_field(form.contact_data) }}
