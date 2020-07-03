@@ -54,44 +54,41 @@ def running_pod(container_names):
     podman output, which is helpful if that part fails.
     """
 
+    build_image_command = f"podman build -t {app_image_name} .".split()
+    remove_pod_if_it_exists = f"podman pod rm --force --ignore {pod_name}".split()
+    run_pod = "podman play kube tests_container/pod.yml".split()
+    upgrade_db = f"podman exec {container_names.app} flask db upgrade".split()
+
     try:
-        subprocess.run(["podman", "build", "-t", app_image_name, "."], check=True)
-        subprocess.run(
-            ["podman", "pod", "rm", "--force", "--ignore", pod_name], check=True
-        )
-        subprocess.run(
-            ["podman", "play", "kube", "tests_container/pod.yml"], check=True
-        )
-        subprocess.run("podman container ls".split())
+        subprocess.run(build_image_command, check=True)
+        subprocess.run(remove_pod_if_it_exists, check=True)
+        subprocess.run(run_pod, check=True)
 
         wait_for_db_or_raise(container_names.db)
 
-        subprocess.run(
-            ["podman", "exec", container_names.app, "flask", "db", "upgrade"],
-            check=True,
-        )
+        subprocess.run(upgrade_db, check=True)
 
         wait_for_app_or_raise()
 
         yield
     finally:
-        subprocess.run(["podman", "pod", "rm", "--force", pod_name], check=True)
+        subprocess.run(remove_pod_if_it_exists, check=True)
 
 
 def wait_for_db_or_raise(container_name):
     attempts = 40
     delay_seconds = 0.5
 
+    db_test_command = [
+        *f"podman exec {container_name} psql -h localhost -U corona-sign-in".split(),
+        "--command",
+        "SELECT 1;",
+    ]
+
     for _ in range(attempts):
         time.sleep(delay_seconds)
         result = subprocess.run(
-            [
-                *f"podman exec {container_name}".split(),
-                *"psql -h localhost -U corona-sign-in".split(),
-                *["--command", "SELECT 1;"],
-            ],
-            stderr=subprocess.STDOUT,
-            stdout=subprocess.PIPE,
+            db_test_command, stderr=subprocess.STDOUT, stdout=subprocess.PIPE
         )
         if result.returncode == 0:
             return
@@ -150,15 +147,15 @@ def test_submitted_form_is_in_database(selenium, container_names):
     # ensure the result page has loaded
     selenium.find_element_by_xpath('//*[text()="Danke"]')
 
-    completedProcess = subprocess.run(
-        [
-            *f"podman exec {container_names.db}".split(),
-            *"psql -h localhost -U corona-sign-in corona-sign-in".split(),
-            *"--quiet --no-align --pset=tuples_only".split(),
-            *["--command", "SELECT * FROM sign_ins;"],
-        ],
-        stdout=subprocess.PIPE,
+    run_in_db_container = f"podman exec {container_names.db}".split()
+    run_db_query = (
+        "psql -h localhost -U corona-sign-in corona-sign-in "
+        "--quiet --no-align --pset=tuples_only --command ".split()
     )
+    get_sign_ins_from_db_sql = "SELECT * FROM sign_ins;"
+    commandline = [*run_in_db_container, *run_db_query, get_sign_ins_from_db_sql]
+
+    completedProcess = subprocess.run(commandline, stdout=subprocess.PIPE)
 
     assert (
         completedProcess.stdout.decode("utf-8").strip()
