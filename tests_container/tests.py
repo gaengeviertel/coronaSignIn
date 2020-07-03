@@ -40,18 +40,6 @@ def running_pod(container_names):
 
     Also, currently there is no way to wipe the database between tests.
     This is not ideal, but recreating the pod takes a long time.
-
-    Debugging failing tests based on this is not easy because the logs are deleted when
-    we remove the pod.
-
-    You can use `pytest --pdb`, insert a `breakpoint()` or remove the "podman pod rm"
-    command to keep the pod up and then use `podman logs
-    corona-sign-in-automatic-test-app` (container name is podname-containername) to get
-    the logs or `podman exec -ti corona-sign-in-automatic-test-app bash` to get a shell
-    in the container.
-
-    Running pytest with -s (so that it directly prints stdout) allows you to see the
-    podman output, which is helpful if that part fails.
     """
 
     build_image_command = f"podman build -t {app_image_name} .".split()
