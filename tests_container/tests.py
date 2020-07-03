@@ -39,7 +39,7 @@ def running_pod(container_names):
     This is shared state between tests.
 
     Also, currently there is no way to wipe the database between tests.
-    This is not idea, but recreating the pod takes a long time.
+    This is not ideal, but recreating the pod takes a long time.
 
     Debugging failing tests based on this is not easy because the logs are deleted when
     we remove the pod.
@@ -96,7 +96,7 @@ def wait_for_db_or_raise(container_name):
         if result.returncode == 0:
             return
 
-    print("Output fromwait_for_db:")
+    print("Output from wait_for_db:")
     print(result.stdout)
 
     raise Exception(
