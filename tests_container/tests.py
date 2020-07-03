@@ -14,8 +14,16 @@ app_image_name = "corona-sign-in-automatic-test"
 pod_name = "corona-sign-in-automatic-test"
 
 
+def check_podman_command_is_available():
+    try:
+        subprocess.run(["podman", "--version"], stdout=subprocess.DEVNULL)
+    except FileNotFoundError:
+        raise Exception("`podman` not found, cannot run container tests")
+
+
 @fixture(scope="session")
 def container_names():
+    check_podman_command_is_available()
     # Podman pre-2 seems to generate different container names
     ContainerNames = namedtuple("ContainerNames", "app db")
     version = (
