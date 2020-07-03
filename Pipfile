@@ -15,6 +15,7 @@ pytest-selenium = "*"
 pytest-flask-sqlalchemy = "*"
 freezegun = "*"
 requests = "*"
+beautifulsoup4 = "*"
 
 [packages]
 flask = "*"

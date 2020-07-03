@@ -1,6 +1,7 @@
 from datetime import date
 
 import requests
+from bs4 import BeautifulSoup
 from flask import url_for
 from freezegun import freeze_time
 from pytest import fail, mark
@@ -19,6 +20,18 @@ def test_headline_exists(client):
 def test_success_page_has_content(client):
     page = client.get("/thank-you")
     assert b"Danke" in page.data
+
+
+def test_form_validation_errors_are_shown(client):
+    page = client.post("/", data={"first_name": "foo"})
+    html = BeautifulSoup(page.data, "html.parser")
+
+    last_name_input = html.find("input", attrs={"name": "last_name"})
+    assert "has_error" in last_name_input.attrs.get("class", [])
+
+    errors = html.find_all("ul", attrs={"class": "errors"})
+    assert len(errors) == 2  # last name and contact data
+    assert errors[0].text.strip() == "Bitte trag deinen Nachnamen ein"
 
 
 @freeze_time("2020-03-21")

@@ -57,6 +57,17 @@ input[type="submit"]:hover {
   color: #e31d17;
 }
 
+input.has_error,
+textarea.has_error {
+  border: 1px solid red;
+}
+
+.errors {
+  color: red;
+  margin-bottom: 0;
+  list-style: none;
+}
+
 label {
   font-size: 1rem;
   font-weight: normal;

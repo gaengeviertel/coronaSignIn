@@ -1,3 +1,4 @@
+{% from "_render_field.html.jinja2" import render_field %}
 <!DOCTYPE html>
 <html class="no-js" lang="">
   <head>
@@ -16,16 +17,18 @@
     <span class="description">Aktuell sind wir zum Zweck der Nachverfolgung von Infektionsketten verpflichtet folgende Kontaktdaten unserer Gäste unter Angabe des Datums zu erfassen:</span>
   </div>
   <div class="contact-form-container">
-    <form method=POST action>
-        {{ form.csrf_token }}
-        {{ form.first_name.label }} {{ form.first_name }}
-        {{ form.last_name.label }} {{ form.last_name }}
-        {{ form.contact_data.label }} {{ form.contact_data }}
-        <div  class="checkbox-group">
-          <input id="save_for_next_time" type="checkbox" />
-          <label for="save_for_next_time">Daten fürs nächste Mal auf diesem Gerät speichern</label>
-        </div>
-        <input type="submit" value="Jetzt einchecken" />
+    <form method=POST action novalidate>
+      {{ form.csrf_token }}
+      {{ render_field(form.first_name) }}
+      {{ render_field(form.last_name) }}
+      {{ render_field(form.contact_data) }}
+      <div  class="checkbox-group">
+        <input id="save_for_next_time" type="checkbox" />
+        <label for="save_for_next_time">
+          Daten fürs nächste Mal auf diesem Gerät speichern
+        </label>
+      </div>
+      <input type="submit" value="Jetzt einchecken" />
     </form>
     </div>
     <div class="footer-container">
