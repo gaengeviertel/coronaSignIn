@@ -1,7 +1,9 @@
 from datetime import date
 
-from freezegun import freeze_time
+import requests
+from bs4 import BeautifulSoup
 from flask import url_for
+from freezegun import freeze_time
 from pytest import fail, mark
 from selenium.common.exceptions import NoSuchElementException
 from sqlalchemy import select
@@ -20,8 +22,22 @@ def test_success_page_has_content(client):
     assert b"Danke" in page.data
 
 
+def test_form_validation_errors_are_shown(client):
+    page = client.post("/", data={"first_name": "foo"})
+    html = BeautifulSoup(page.data, "html.parser")
+
+    last_name_input = html.find("input", attrs={"name": "last_name"})
+    assert "has_error" in last_name_input.attrs.get("class", [])
+
+    errors = html.find_all("ul", attrs={"class": "errors"})
+    assert len(errors) == 2  # last name and contact data
+    assert errors[0].text.strip() == "Bitte trag deinen Nachnamen ein"
+
+
 @freeze_time("2020-03-21")
 def test_db(app, db_session):
+    # This test is not used yet, but it shows that the db_session works. Let's keep it
+    # around until we use the db in another test
     db.session.execute(
         sign_ins.table.insert().values(
             first_name="f", last_name="l", contact_data="c", date=date.today()
@@ -38,6 +54,21 @@ def test_db(app, db_session):
         ("contact_data", "c"),
         ("date", date(2020, 3, 21)),
     ]
+
+
+@mark.usefixtures("live_server")
+def test_no_cookies():
+    response = requests.get(url_for("index", _external=True))
+    assert "set-cookie" not in response.headers
+
+    response = requests.post(
+        url_for("index", _external=True),
+        data={"first_name": "zxcv", "last_name": "asdf", "contact_data": "qwer"},
+    )
+    assert "set-cookie" not in response.headers
+
+    response = requests.get(url_for("thank_you", _external=True))
+    assert "set-cookie" not in response.headers
 
 
 @mark.usefixtures("live_server")

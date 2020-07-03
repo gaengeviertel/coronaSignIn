@@ -1,0 +1,15 @@
+{% macro render_field(field) %}
+  {# Based on code from https://wtforms.readthedocs.io/en/stable/specific_problems/ #}
+  {{ field.label }}
+  {% if field.errors %}
+    <ul class="errors">
+      {% for error in field.errors %}
+        <li>{{ error|e }}</li>
+      {% endfor %}
+    </ul>
+    {% set css_class = 'has_error ' + kwargs.pop('class', '') %}
+    {{ field(class=css_class, **kwargs) }}
+  {% else %}
+    {{ field(**kwargs) }}
+  {% endif %}
+{% endmacro %}

@@ -57,10 +57,20 @@ input[type="submit"]:hover {
   color: #e31d17;
 }
 
+input.has_error,
+textarea.has_error {
+  border: 1px solid red;
+}
+
+.errors {
+  color: red;
+  margin-bottom: 0;
+  list-style: none;
+}
+
 label {
   font-size: 1rem;
   font-weight: normal;
-  pointer-events: none;
 }
 
 h2 {
@@ -76,7 +86,6 @@ h2 {
 a {
   color: #e31d17;
   text-decoration: none;
-  font-size: 0.8125rem;
 }
 
 a:hover,
@@ -110,15 +119,24 @@ a:focus {
 }
 
 .footer-container {
-  max-width: 90%;
+  width: 25rem;
+  max-width: min(90%, 500px);
   margin: 0 auto 1.5rem;
-  text-align: center;
+  font-size: 0.8125rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
 }
 
 .checkbox-group {
   display: flex;
   align-items: center;
   margin: 2rem 0;
+}
+
+.checkbox-group > label,
+.checkbox-group > input {
+  cursor: pointer;
 }
 
 .image-container {
