@@ -34,6 +34,12 @@ def test_form_validation_errors_are_shown(client):
     assert errors[0].text.strip() == "Bitte trag deinen Nachnamen ein"
 
 
+@mark.usefixtures("broken_app")
+def test_error_page(client):
+    page = client.get("/")
+    assert b"Uups... Error 500" in page.data
+
+
 @freeze_time("2020-03-21")
 def test_db(app, db_session):
     # This test is not used yet, but it shows that the db_session works. Let's keep it
