@@ -37,4 +37,9 @@ def create_app(config=None):
     def thank_you():
         return render_template("success-page.html.jinja2")
 
+    @app.errorhandler(500)
+    def internal_server_error(e):
+        return render_template("error-page.html.jinja2"), 500
+
+    app.register_error_handler(500, internal_server_error)
     return app

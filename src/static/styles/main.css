@@ -156,3 +156,18 @@ a:focus {
 .image-container > img:nth-child(2) {
   align-self: flex-end;
 }
+
+.error-container {
+  margin: 0 auto;
+  width: 25rem;
+  max-width: min(90%, 500px);
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  max-width: 90%;
+  height: 100vh;
+}
+
+.error-container > p {
+  color: #e31d17;
+}

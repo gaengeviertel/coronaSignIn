@@ -30,6 +30,13 @@ def _db(app):
 
 
 @pytest.fixture
+def broken_app(app, mocker):
+    mocker.patch("app.sign_ins.Form", return_value={})
+    with app.app_context():
+        yield app
+
+
+@pytest.fixture
 def firefox_options(firefox_options):
     firefox_options.add_argument("--headless")
     return firefox_options
