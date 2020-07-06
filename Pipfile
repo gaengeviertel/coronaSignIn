@@ -17,6 +17,7 @@ freezegun = "*"
 invoke = "*"
 requests = "*"
 beautifulsoup4 = "*"
+faker = "*"
 
 [packages]
 flask = "*"

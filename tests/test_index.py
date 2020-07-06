@@ -1,3 +1,4 @@
+import json
 from datetime import datetime, timedelta
 
 import requests
@@ -10,6 +11,7 @@ from sqlalchemy import select
 
 import sign_ins
 from db import db
+from factories import makeSignInData
 
 
 def test_headline_exists(client):
@@ -73,16 +75,7 @@ def test_no_cookies():
     response = requests.get(url_for("index", _external=True))
     assert "set-cookie" not in response.headers
 
-    response = requests.post(
-        url_for("index", _external=True),
-        data={
-            "first_name": "zxcv",
-            "last_name": "asdf",
-            "street_and_house_number": "foo 7",
-            "plz_and_city": "123 city",
-            "phone_number": "1234",
-        },
-    )
+    response = requests.post(url_for("index", _external=True), data=makeSignInData())
     assert "Dein Eintrag wurde in unserer Datenbank gespeichert" in response.text
     assert "set-cookie" not in response.headers
 
@@ -178,14 +171,11 @@ def test_localstorage_is_cleared_if_saving_not_selected(selenium):
     selenium.get(url_for("index", _external=True))
     selenium.execute_script("window.localStorage.clear()")
     selenium.execute_script(
-        """
-        window.localStorage.setItem('saved-form', JSON.stringify({
-            first_name: "Jules",
-            last_name: "Joseph",
-            street_and_house_number: "bar street 7",
-            plz_and_city: "333 whoop whoop",
-            phone_number: "22 33 44"
-        }));
+        f"""
+        window.localStorage.setItem(
+            'saved-form',
+            '{json.dumps(makeSignInData())}'
+        );
     """
     )
     selenium.get(url_for("index", _external=True))
@@ -197,11 +187,7 @@ def test_localstorage_is_cleared_if_saving_not_selected(selenium):
         is not None
     )
 
-    fill_field(selenium, "first_name", "Octave")
-    fill_field(selenium, "last_name", "Garnier")
-    fill_field(selenium, "street_and_house_number", "my street 1")
-    fill_field(selenium, "plz_and_city", "666 evil town")
-    fill_field(selenium, "phone_number", "12345")
+    fill_form_with_fake_data(selenium)
 
     save_for_next_time = selenium.find_element_by_id("save_for_next_time")
     assert (
@@ -230,11 +216,7 @@ def test_localstorage_is_not_populated_on_form_submit_by_default(selenium):
 
     selenium.get(url_for("index", _external=True))
 
-    fill_field(selenium, "first_name", "Octave")
-    fill_field(selenium, "last_name", "Garnier")
-    fill_field(selenium, "street_and_house_number", "yup 2")
-    fill_field(selenium, "plz_and_city", "7 yea")
-    fill_field(selenium, "phone_number", "555-12345")
+    fill_form_with_fake_data(selenium)
 
     selenium.find_element_by_xpath('//input[@type="submit"]').click()
 
@@ -288,14 +270,11 @@ def test_save_for_next_time_is_preselected_iff_data_was_stored(selenium):
     assert not selenium.find_element_by_id("save_for_next_time").is_selected()
 
     selenium.execute_script(
-        """
-        window.localStorage.setItem('saved-form', JSON.stringify({
-            first_name: "Jules",
-            last_name: "Joseph",
-            "street_and_house_number": "yup 2",
-            "plz_and_city": "7 yea",
-            "phone_number": "555-12345",
-        }));
+        f"""
+        window.localStorage.setItem(
+            'saved-form',
+            '{json.dumps(makeSignInData())}'
+        );
     """
     )
     selenium.get(url_for("index", _external=True))
@@ -305,3 +284,8 @@ def test_save_for_next_time_is_preselected_iff_data_was_stored(selenium):
 
 def fill_field(selenium, name, value):
     selenium.find_element_by_name(name).send_keys(value)
+
+
+def fill_form_with_fake_data(selenium):
+    for name, value in makeSignInData().items():
+        fill_field(selenium, name, value)
