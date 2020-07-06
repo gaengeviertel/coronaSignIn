@@ -49,7 +49,7 @@ input[type="submit"] {
   border: 3px solid #e31d17;
   color: white;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 1.125rem;
   text-transform: uppercase;
 }
 
@@ -71,7 +71,7 @@ textarea.has_error {
 }
 
 label {
-  font-size: 1rem;
+  font-size: 1.125rem;
   font-weight: normal;
 }
 
@@ -133,7 +133,7 @@ a:focus {
 }
 
 .description {
-  font-size: 0.8125rem;
+  font-size: 1rem;
   text-align: center;
   display: block;
 }
@@ -142,7 +142,7 @@ a:focus {
   width: 25rem;
   max-width: min(90%, 500px);
   margin: 0 auto 1.5rem;
-  font-size: 0.8125rem;
+  font-size: 0.9375rem;
 }
 
 .footer-row {
