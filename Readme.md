@@ -13,13 +13,6 @@ correctness of information or absence of critical bugs.
 Nonetheless, we hope this is helpful, but you need to decide if there is an
 unacceptable risk for you.
 
-**ALSO IMPORTANT**: This document often refers to 21 days, while the regulation
-requires you to produce data for the last 14 days. This is so that you have
-a window in which to respond: If the data is automatically deleted after 14
-days, you need to extract the data on the day you get the request.
-It is currently unclear whether this is necessary. Please use your own
-judgement.
-
 ## Architecture
 
 The application will write the data into an PostgreSQL database. At the moment
@@ -60,46 +53,62 @@ are listed first and then discussed in detail.
     forever.
 
 #### Backups
-We suggest to set up a cronjob to export data as described below. In order to
-prune the stored data, you also need to delete old backups.
+Given that you also need to delete data from backups after four weeks, we
+suggest the following approach:
 
-Please be aware that the oldest data you store is the age of the oldest entry in
-the database plus the age of your oldest backup.
+- Set up a cronjob to backup the data for the previous day every morning at e.g.
+    3 am.
+- Use the date of the data you backed up in the filename
+- In a similar cronjob, remove all files that are older than 28 days.
+
+The shell command to save a backup is
+
+```
+YESTERDAY=$(date -d yesterday '+%Y-%m-%d')
+podman exec corona-sign-in-db \
+    psql -h localhost -U corona-sign-in corona-sign-in \
+    --csv
+    --command "SELECT * FROM sign_ins WHERE signed_in_at::date = $YESTERDAY"
+    > "/path/to/backup/folder/corona-sign-in-${YESTERDAY}.csv"
+```
+
+You can delete old files with the following commands. Make sure there are no
+other files in that folder!:
+
+```
+find /path/to/backup/folder -daystart -mtime +28 -delete
+```
 
 #### Data pruning
 
-This deletes all entries that are older than 21 days. This should be run in
-a cronjob. Please test this thoroughly! If you accidentally delete data earlier
-than you mean to, you won't be able to produce it in case of a COVID-19
-infection!
+This deletes all entries that are older than four weeks (28 days). This should
+be run in a cronjob. Please test this thoroughly! If you accidentally delete
+data earlier than you mean to, you won't be able to produce it in case of
+a COVID-19 infection!
 
 ```
 podman exec corona-sign-in-db \
     psql -h localhost -U corona-sign-in corona-sign-in \
-    --command 'DELETE FROM sign_ins WHERE DATE_PART('day', NOW() - date) > 21;'
+    --command 'DELETE FROM sign_ins WHERE NOW()::date - signed_in_at::date > 28;'
 ```
 
-To delete backups older than 7 days, you can use the following command. Please
-make sure you understand it before running so you don't accidentally delete
-important things!
-
-`find /path/to/backups -mtime +7 -print0 | xargs -0 rm`
-
-This should also run in a cronjob. All in all, this means that you store data
-for *4 weeks* if you followed the suggestions in this document. (The oldest
-backup will be a week old, and it will contain data from 21 days before that.)
+For how to delete backups, see the Backups section
 
 ### How to export data
 
 This gets all saved sign-ins and stores them in a file named like
-`corona-sign-in-2020-07-02.csv`. Test this after setting everything up, you
-might need to adjust the pod name or postgresql credentials!
+`corona-sign-in-2020-06-04-to-2020-07-02.csv`. Test this after setting
+everything up, you might need to adjust the pod name or postgresql credentials!
+
+You will only ever need to export data in case of COVID-19 infection and you
+should delete your local copy of the csv file after handing it over to the
+authorities.
 
 ```
 podman exec corona-sign-in-db \
     psql -h localhost -U corona-sign-in corona-sign-in \
     --csv --command 'SELECT * FROM sign_ins;' \
-    > "corona-sign-in-$(date -I).csv"
+    > "corona-sign-in-$(date -I -d '28 days ago')-to-$(date -I).csv"
 ```
 
 ## Dev Setup
