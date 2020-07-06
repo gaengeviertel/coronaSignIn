@@ -124,11 +124,32 @@ and you can start the dev server using `flask run`
 ### Tests
 
 Run the tests using `pipenv run pytest`. You can also auto-rerun tests while
-you're changing code with `pipenv run ./tdd.sh`. It will only re-run tests
+you're changing code with `pipenv run invoke tdd`. It will only re-run tests
 affected by your changes, so it should be a pretty good feedback loop.
 
-Note: You need to have chromedriver installed for the selenium tests. If that is
-not the case, you can run all non-selenium tests using `pytest -m 'not slow'`
+The selenium tests are marked with `slow`. If you don't have selenium installed,
+you can skip them using `pytest -m 'not slow'`.
+
+The container-tests are not run by default, since they are even slower and need
+[podman installed](https://podman.io/getting-started/installation). You can run
+them using `inv containertests`.
+
+The containertests are a bit hard to debug. Here are some things that can help:
+
+- Use `pytest tests_container -s` to show stdout and stderr during the test run.
+    This shows you podman output, so you can see why containers aren't starting
+    etc.
+- Use one of the following ways to stop the tests:
+    - `pytest tests_container --pdb` will break on failures
+    - Inserting `breakpoint()` will break at that location
+    - Removing the `finally`-part from `tests_container.tests.running_pod` will
+        keep the containers around after the test run
+- When stopped, these are some ways to get information:
+    - `podman logs corona-sign-in-automatic-test-app` will show you the app logs
+    - `podman exec -ti corona-sign-in-automatic-test-app bash` will give you
+        a shell in the app container
+    - `podman exec -ti corona-sign-in-automatic-test-db psql -h localhost -U corona-sign-in corona-sign-in`
+        will get you a database shell
 
 ### Style
 
