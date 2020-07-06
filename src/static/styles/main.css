@@ -123,9 +123,13 @@ a:focus {
   max-width: min(90%, 500px);
   margin: 0 auto 1.5rem;
   font-size: 0.8125rem;
+}
+
+.footer-row {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
+  margin-bottom: 0.3rem;
 }
 
 .checkbox-group {
