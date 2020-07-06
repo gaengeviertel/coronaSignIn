@@ -3,7 +3,7 @@ import socket
 import subprocess
 import time
 from collections import namedtuple
-from datetime import date
+from datetime import date, datetime, timedelta
 
 from pytest import fixture, mark
 from selenium import webdriver
@@ -137,26 +137,41 @@ def selenium():
 def test_submitted_form_is_in_database(selenium, container_names):
     selenium.get("http://localhost:9178/")
 
-    selenium.find_element_by_name("first_name").send_keys("Octave")
-    selenium.find_element_by_name("last_name").send_keys("Garnier")
-    selenium.find_element_by_name("contact_data").send_keys("555-12345")
+    def fill_field(name, value):
+        selenium.find_element_by_name(name).send_keys(value)
+
+    fill_field("first_name", "Octave")
+    fill_field("last_name", "Garnier")
+    fill_field("street_and_house_number", "foo 9")
+    fill_field("plz_and_city", "1234 city")
+    fill_field("phone_number", "33 4455")
 
     selenium.find_element_by_xpath('//input[@type="submit"]').click()
 
     # ensure the result page has loaded
     selenium.find_element_by_xpath('//*[text()="Danke"]')
 
+    #### Verify ####
+
+    # Get the data from the db
+
     run_in_db_container = f"podman exec {container_names.db}".split()
     run_db_query = (
         "psql -h localhost -U corona-sign-in corona-sign-in "
         "--quiet --no-align --pset=tuples_only --command ".split()
     )
-    get_sign_ins_from_db_sql = "SELECT * FROM sign_ins;"
+    get_sign_ins_from_db_sql = (
+        "SELECT "
+        "   first_name, last_name, street_and_house_number, "
+        "   plz_and_city, phone_number, signed_in_at "
+        "FROM sign_ins;"
+    )
     commandline = [*run_in_db_container, *run_db_query, get_sign_ins_from_db_sql]
 
     completedProcess = subprocess.run(commandline, stdout=subprocess.PIPE)
+    output = completedProcess.stdout.decode("utf-8").strip()
 
-    assert (
-        completedProcess.stdout.decode("utf-8").strip()
-        == f"Octave|Garnier|555-12345|{date.today().isoformat()}"
+    # We only compare the start of the date to avoid having to deal with seconds
+    assert output.startswith(
+        f"Octave|Garnier|foo 9|1234 city|33 4455|{date.today().isoformat()}"
     )

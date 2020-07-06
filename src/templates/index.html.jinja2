@@ -24,7 +24,9 @@
       {{ form.csrf_token }}
       {{ render_field(form.first_name) }}
       {{ render_field(form.last_name) }}
-      {{ render_field(form.contact_data) }}
+      {{ render_field(form.street_and_house_number) }}
+      {{ render_field(form.plz_and_city) }}
+      {{ render_field(form.phone_number) }}
       <div  class="checkbox-group">
         <input id="save_for_next_time" type="checkbox" />
         <label for="save_for_next_time">

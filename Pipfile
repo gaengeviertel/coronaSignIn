@@ -13,10 +13,10 @@ black = "==19.10b0"
 selenium = "*"
 pytest-selenium = "*"
 pytest-flask-sqlalchemy = "*"
-freezegun = "*"
 invoke = "*"
 requests = "*"
 beautifulsoup4 = "*"
+faker = "*"
 
 [packages]
 flask = "*"

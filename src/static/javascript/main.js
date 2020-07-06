@@ -1,31 +1,43 @@
 window.onload = function () {
+  function maybeUpdateValueFromObject(obj, elementId) {
+    const value = obj[elementId];
+    if (value) {
+      document.getElementById(elementId).value = value;
+    }
+  }
+
   const storedData = JSON.parse(window.localStorage.getItem("saved-form"));
+
+  const form_fields = [
+    "first_name",
+    "last_name",
+    "street_and_house_number",
+    "plz_and_city",
+    "phone_number"
+  ];
+
   if (storedData !== null && typeof storedData === "object") {
-    if (storedData.first_name) {
-      document.getElementById("first_name").value = storedData.first_name;
-    }
-    if (storedData.last_name) {
-      document.getElementById("last_name").value = storedData.last_name;
-    }
-    if (storedData.contact_data) {
-      document.getElementById("contact_data").value = storedData.contact_data;
-    }
+    form_fields.forEach(function (field) {
+      maybeUpdateValueFromObject(storedData, field);
+    });
+
     // They selected save for later last time, so we assume they want to keep that
     document.getElementById("save_for_next_time").checked = true;
+  }
+
+  function formValuesAsJSON() {
+    const data = {};
+    form_fields.forEach(function (field) {
+      data[field] = document.getElementById(field).value;
+    });
+    return JSON.stringify(data);
   }
 
   document
     .getElementsByTagName("form")[0]
     .addEventListener("submit", function () {
       if (document.getElementById("save_for_next_time").checked) {
-        window.localStorage.setItem(
-          "saved-form",
-          JSON.stringify({
-            first_name: document.getElementById("first_name").value,
-            last_name: document.getElementById("last_name").value,
-            contact_data: document.getElementById("contact_data").value,
-          })
-        );
+        window.localStorage.setItem("saved-form", formValuesAsJSON());
       } else {
         window.localStorage.clear();
       }
