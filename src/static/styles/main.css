@@ -1,8 +1,8 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: -apple-system, Montserrat, BlinkMacSystemFont, "Segoe UI",
+    "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+    "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #424242;
@@ -17,7 +17,7 @@ textarea {
   box-sizing: border-box;
   background: none;
   background-color: white;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Montserrat, Arial, Helvetica, sans-serif;
   font-size: 1.2rem;
   font-weight: bold;
   padding: 0.5rem;
@@ -50,6 +50,7 @@ input[type="submit"] {
   color: white;
   cursor: pointer;
   font-size: 1rem;
+  text-transform: uppercase;
 }
 
 input[type="submit"]:hover {
@@ -59,12 +60,13 @@ input[type="submit"]:hover {
 
 input.has_error,
 textarea.has_error {
-  border: 1px solid red;
+  border: 1px solid #e31d17;
 }
 
 .errors {
-  color: red;
+  color: #e31d17;
   margin-bottom: 0;
+  padding: 0;
   list-style: none;
 }
 
@@ -73,19 +75,37 @@ label {
   font-weight: normal;
 }
 
+h1 {
+  font-family: Monoton, cursive;
+  font-weight: 400;
+  line-height: 2.2rem;
+  font-size: 1.5rem;
+  text-align: center;
+  text-transform: uppercase;
+  margin: 0 0 1rem 0;
+}
+
+.highlight {
+  color: #e31d17;
+  font-size: 2.5rem;
+  margin: 1rem 0 0;
+}
+
 h2 {
-  font-family: NobileBold, Arial, Helvetica;
   font-size: 1.2rem;
-  margin: 1rem auto;
+  margin: 1rem auto 0.25rem;
   color: #111111;
-  border-bottom: 3px solid #111111;
   line-height: 1.75rem;
   text-transform: uppercase;
+  text-align: center;
+  line-height: 1.2rem;
+  font-weight: 800;
 }
 
 a {
   color: #e31d17;
   text-decoration: none;
+  padding: 0 0.25rem;
 }
 
 a:hover,
@@ -103,7 +123,7 @@ a:focus {
 }
 
 .logo {
-  height: 8rem;
+  height: 6rem;
 }
 
 .contact-form-container {
@@ -126,10 +146,8 @@ a:focus {
 }
 
 .footer-row {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-  margin-bottom: 0.3rem;
+  text-align: center;
+  margin-bottom: 0.5rem;
 }
 
 .checkbox-group {
@@ -144,7 +162,7 @@ a:focus {
 }
 
 .image-container {
-  margin: 4rem auto;
+  margin: 2.5rem auto 3rem;
   width: 500px;
   height: 12.5rem;
   max-width: 70%;
@@ -167,11 +185,14 @@ a:focus {
   max-width: min(90%, 500px);
   display: flex;
   justify-content: center;
+  align-items: center;
   flex-direction: column;
   max-width: 90%;
   height: 100vh;
 }
 
-.error-container > p {
-  color: #e31d17;
+.error-container > img {
+  width: 4rem;
+  height: auto;
+  margin: 0.5rem;
 }
