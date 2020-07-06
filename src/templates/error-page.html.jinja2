@@ -1,23 +1,12 @@
-<!DOCTYPE html>
-<html class="no-js" lang="">
-  <head>
-    <meta charset="utf-8" />
-    <title>Uups...</title>
-    <link rel="stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/main.css') }}">
-    <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico')}}">
-    <link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;700;800&display=swap" rel="stylesheet">
-    <meta name="description" content="" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-  </head>
+{% extends "base.html.jinja2" %}
 
-  <body>
-    <div class="error-container">
-        <img src="/static/images/virus.jpg" alt="Illustration Virus" />
-        <h1 class="highlight">Uups...</h1>
-        <h1>Error 500</h1>
-        <h2>Versuch's bitte später nochmal!</h2>
-        <span class="description">Sorry! Das ist nicht deine Schuld, sondern unsere – wir arbeiten dran.</span>
-    </div>
-  </body>
-</html>
+{% block title %}Upps...{% endblock %}
+{% block body %}
+  <div class="error-container">
+      <img src="/static/images/virus.jpg" alt="Illustration Virus" />
+      <h1 class="highlight">Uups...</h1>
+      <h1>Error 500</h1>
+      <h2>Versuch's bitte später nochmal!</h2>
+      <span class="description">Sorry! Das ist nicht deine Schuld, sondern unsere – wir arbeiten dran.</span>
+  </div>
+{% endblock %}
