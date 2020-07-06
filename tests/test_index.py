@@ -37,7 +37,7 @@ def test_form_validation_errors_are_shown(client):
 def test_error_page(broken_app, client):
     broken_app.config["PROPAGATE_EXCEPTIONS"] = False
     page = client.get("/")
-    assert b"Uups... Error 500" in page.data
+    assert b"Uups..." in page.data
 
 
 def test_db(app, db_session):
