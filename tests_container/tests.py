@@ -168,12 +168,7 @@ def test_submitted_form_is_in_database(selenium, container_names):
     completedProcess = subprocess.run(commandline, stdout=subprocess.PIPE)
     output = completedProcess.stdout.decode("utf-8").strip()
 
-    # Verify the data
-    fields = output.split("|")
-
-    assert fields[:-1] == ["Octave", "Garnier", "foo 9", "1234 city", "33 4455"]
-    signed_in_at = datetime.strptime(fields[-1], "%Y-%m-%d %H:%M:%S.%f")
-    signed_in_ago = datetime.utcnow() - signed_in_at
-
-    assert signed_in_ago.total_seconds() > 0, "signed_in_at is in the future"
-    assert signed_in_ago < timedelta(seconds=10)
+    # We only compare the start of the date to avoid having to deal with seconds
+    assert output.startswith(
+        f"Octave|Garnier|foo 9|1234 city|33 4455|{date.today().isoformat()}"
+    )

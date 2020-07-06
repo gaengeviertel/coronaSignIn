@@ -4,7 +4,6 @@ from datetime import datetime, timedelta
 import requests
 from bs4 import BeautifulSoup
 from flask import url_for
-from freezegun import freeze_time
 from pytest import fail, mark
 from selenium.common.exceptions import NoSuchElementException
 from sqlalchemy import select
@@ -41,7 +40,6 @@ def test_error_page(broken_app, client):
     assert b"Uups... Error 500" in page.data
 
 
-@freeze_time("2020-03-21T13:12:07")
 def test_db(app, db_session):
     # This test is not used yet, but it shows that the db_session works. Let's keep it
     # around until we use the db in another test
@@ -52,7 +50,7 @@ def test_db(app, db_session):
             street_and_house_number="example lane 42",
             plz_and_city="12345 anyville",
             phone_number="555-12345",
-            signed_in_at=datetime.now(),
+            signed_in_at=datetime(2020, 3, 21, 13, 12, 7),
         )
     )
     db.session.commit()
