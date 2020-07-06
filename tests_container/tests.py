@@ -64,7 +64,7 @@ def running_pod(container_names):
 
         subprocess.run(upgrade_db, check=True)
 
-        wait_for_app_or_raise()
+        wait_for_app_or_raise(container_names.app)
 
         yield
     finally:
@@ -98,7 +98,7 @@ def wait_for_db_or_raise(container_name):
     )
 
 
-def wait_for_app_or_raise():
+def wait_for_app_or_raise(container_name):
     attempts = 150
     delay_seconds = 0.2
 
@@ -114,6 +114,9 @@ def wait_for_app_or_raise():
                 pass
         finally:
             conn.close()
+
+    print("Output from app container")
+    subprocess.run(["podman", "logs", container_name])
 
     raise Exception(
         f"Waited {attempts} x {delay_seconds}s for the app "
