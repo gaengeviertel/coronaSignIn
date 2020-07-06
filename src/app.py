@@ -1,4 +1,5 @@
-import datetime
+import sys
+from datetime import datetime
 
 from flask import Flask, redirect, render_template
 
@@ -21,12 +22,7 @@ def create_app(config=None):
         form = sign_ins.Form()
         if form.validate_on_submit():
             db.session.execute(
-                sign_ins.table.insert().values(
-                    first_name=form.first_name.data,
-                    last_name=form.last_name.data,
-                    contact_data=form.contact_data.data,
-                    date=datetime.date.today(),
-                )
+                sign_ins.table.insert().values(**form.data, signed_in_at=datetime.now())
             )
             db.session.commit()
             return redirect("/thank-you")
