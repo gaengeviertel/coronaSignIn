@@ -34,8 +34,8 @@ def test_form_validation_errors_are_shown(client):
     assert errors[0].text.strip() == "Bitte trag deinen Nachnamen ein"
 
 
-@mark.usefixtures("broken_app")
-def test_error_page(client):
+def test_error_page(broken_app, client):
+    broken_app.config["PROPAGATE_EXCEPTIONS"] = False
     page = client.get("/")
     assert b"Uups... Error 500" in page.data
 

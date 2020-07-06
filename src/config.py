@@ -14,6 +14,7 @@ class ProductionConfig:
 
 
 class TestConfig(ProductionConfig):
+    ENV = "test"
     SECRET_KEY = "insecure secret key for testing"
     SQLALCHEMY_DATABASE_URI = (
         f"sqlite:///{os.path.dirname(os.path.dirname(__file__))}/testing.sqlite"
