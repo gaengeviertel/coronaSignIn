@@ -28,6 +28,10 @@ def create_app(config=None):
             return redirect("/thank-you")
         return render_template("index.html.jinja2", form=form)
 
+    @app.route("/data-protection")
+    def data_protection():
+        return render_template("data-protection.html.jinja2")
+
     @app.route("/thank-you")
     def thank_you():
         return render_template("success-page.html.jinja2")
