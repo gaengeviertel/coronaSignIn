@@ -1,0 +1,18 @@
+{% extends "base.html.jinja2" %}
+
+{% block body %}
+
+<div class="header-container">
+  <a href="/">
+    <img src="/static/images/logo.svg" alt="Komm in die Gänge" class="logo" />
+  </a>
+  {% block headercontent %}
+  <h1 class="highlight">{% block title %}{% endblock %}
+  {% endblock %}
+</div>
+
+{% block content %}{% endblock %}
+
+{% include '_footer.html.jinja2' %}
+
+{% endblock %}
