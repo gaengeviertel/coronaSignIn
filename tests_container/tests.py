@@ -99,8 +99,8 @@ def wait_for_db_or_raise(container_name):
 
 
 def wait_for_app_or_raise(container_name):
-    attempts = 150
-    delay_seconds = 0.2
+    attempts = 360
+    delay_seconds = 0.5
 
     for _ in range(attempts):
         time.sleep(delay_seconds)
