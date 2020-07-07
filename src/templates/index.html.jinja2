@@ -1,59 +1,35 @@
+{% extends "base.html.jinja2" %}
 {% from "_render_field.html.jinja2" import render_field %}
-<!DOCTYPE html>
-<html class="no-js" lang="">
-  <head>
-    <meta charset="utf-8" />
-    <title>Coronaschutz</title>
-    <link rel="stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/main.css') }}">
-    <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico')}}">
-    <link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;700;800&display=swap" rel="stylesheet">
-    <meta name="description" content="" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-  </head>
 
-  <body>
-  <div class="header-container">
-  <img src="/static/images/logo.svg" alt="Komm in die Gänge" class="logo"  />
-    <h1 class="highlight">Corona</h1>
-    <h1>Schutzmaßnahmen</h1>
-    <h2>Moin lieber Gast!</h2>
-    <span class="description">
-        Aktuell sind wir wegen COVID-19 verpflichtet eure Kontaktdaten zu erheben.
-        Die Daten werden lokal gespeichert und nach vier Wochen automatisch gelöscht.
-    </span>
-  </div>
-  <div class="contact-form-container">
-    <form method=POST action novalidate>
-      {{ form.csrf_token }}
-      {{ render_field(form.first_name) }}
-      {{ render_field(form.last_name) }}
-      {{ render_field(form.street_and_house_number) }}
-      {{ render_field(form.plz_and_city) }}
-      {{ render_field(form.phone_number) }}
-      <div  class="checkbox-group">
-        <input id="save_for_next_time" type="checkbox" />
-        <label for="save_for_next_time">
-          Daten fürs nächste Mal auf diesem Gerät speichern
-        </label>
-      </div>
-      <input type="submit" value="Jetzt einchecken" />
-    </form>
+{% block title %}Corona Schutzmaßnahmen{% endblock %}
+{% block body %}
+    <div class="header-container">
+        <img src="/static/images/logo.svg" alt="Komm in die Gänge" class="logo"  />
+            <h1 class="highlight">Corona</h1>
+            <h1>Schutzmaßnahmen</h1>
+            <h2>Moin lieber Gast!</h2>
+            <span class="description">
+                Aktuell sind wir wegen COVID-19 verpflichtet eure Kontaktdaten zu erheben.
+                Die Daten werden lokal gespeichert und nach vier Wochen automatisch gelöscht.
+            </span>
     </div>
-    <div class="footer-container">
-      <div class="footer-row">
-        <span>Wir verwenden keine Cookies</span>
-      </div>
-      <div class="footer-row">
-        <a href="https://das-gaengeviertel.info/meta/impressum.html">Impressum</a>
-        <span>&middot;</span>
-        <a href="https://das-gaengeviertel.info/meta/datenschutz.html">Datenschutz</a>
-      </div>
-      <div class="footer-row">
-        <a href="https://github.com/voidus/coronaSignIn">
-          Diese Anwendung ist freie Software
-        </a>
+    <div class="contact-form-container">
+        <form method=POST action novalidate>
+            {{ form.csrf_token }}
+            {{ render_field(form.first_name) }}
+            {{ render_field(form.last_name) }}
+            {{ render_field(form.street_and_house_number) }}
+            {{ render_field(form.plz_and_city) }}
+            {{ render_field(form.phone_number) }}
+            <div  class="checkbox-group">
+                <input id="save_for_next_time" type="checkbox" />
+                <label for="save_for_next_time">Daten fürs nächste Mal auf diesem Gerät speichern</label>
+            </div>
+            <input type="submit" value="Jetzt einchecken" />
+        </form>
     </div>
+{% endblock %}
+{% block footer %}
+    {% include '_footer.html.jinja2' %}
     <script type=text/javascript src="{{ url_for('static', filename='javascript/main.js') }}"></script>
-  </body>
-</html>
+{% endblock %}
