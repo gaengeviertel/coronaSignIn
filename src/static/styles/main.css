@@ -1,3 +1,9 @@
+html {
+  margin: 0 auto;
+  width: 32rem;
+  max-width: 90%;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, Montserrat, BlinkMacSystemFont, "Segoe UI",
@@ -115,21 +121,17 @@ a:focus {
 
 .header-container {
   margin: 1.5rem auto;
-  width: 500px;
   display: flex;
   justify-content: center;
   flex-direction: column;
-  max-width: 90%;
 }
 
 .logo {
-  height: 6rem;
+  width: 100%;
 }
 
 .contact-form-container {
   margin: 1.5rem auto;
-  width: 500px;
-  max-width: 90%;
 }
 
 .description {
@@ -139,8 +141,6 @@ a:focus {
 }
 
 .footer-container {
-  width: 25rem;
-  max-width: min(90%, 500px);
   margin: 0 auto 1.5rem;
   font-size: 0.9375rem;
 }
@@ -163,9 +163,7 @@ a:focus {
 
 .image-container {
   margin: 2.5rem auto 3rem;
-  width: 500px;
   height: 12.5rem;
-  max-width: 70%;
   display: flex;
   justify-content: center;
 }
@@ -181,13 +179,10 @@ a:focus {
 
 .error-container {
   margin: 0 auto;
-  width: 25rem;
-  max-width: min(90%, 500px);
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  max-width: 90%;
   height: 100vh;
 }
 
