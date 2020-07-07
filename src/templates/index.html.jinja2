@@ -1,18 +1,19 @@
-{% extends "base.html.jinja2" %}
+{% extends "layout.html.jinja2" %}
 {% from "_render_field.html.jinja2" import render_field %}
 
 {% block title %}Corona Schutzmaßnahmen{% endblock %}
-{% block body %}
-    <div class="header-container">
-        <img src="/static/images/logo.svg" alt="Komm in die Gänge" class="logo"  />
-            <h1 class="highlight">Corona</h1>
-            <h1>Schutzmaßnahmen</h1>
-            <h2>Moin lieber Gast!</h2>
-            <span class="description">
-                Aktuell sind wir wegen COVID-19 verpflichtet eure Kontaktdaten zu erheben.
-                Die Daten werden lokal gespeichert und nach vier Wochen automatisch gelöscht.
-            </span>
-    </div>
+
+{% block headercontent %}
+<h1 class="highlight">Corona</h1>
+<h1>Schutzmaßnahmen</h1>
+<h2>Moin lieber Gast!</h2>
+<span class="description">
+    Aktuell sind wir wegen COVID-19 verpflichtet eure Kontaktdaten zu erheben.
+    Die Daten werden lokal gespeichert und nach vier Wochen automatisch gelöscht.
+</span>
+{% endblock %}
+
+{% block content %}
     <div class="contact-form-container">
         <form method=POST action novalidate>
             {{ form.csrf_token }}
@@ -23,13 +24,18 @@
             {{ render_field(form.phone_number) }}
             <div  class="checkbox-group">
                 <input id="save_for_next_time" type="checkbox" />
-                <label for="save_for_next_time">Daten fürs nächste Mal auf diesem Gerät speichern</label>
+                <label for="save_for_next_time">
+                    Daten fürs nächste Mal auf diesem Gerät speichern
+                </label>
             </div>
             <input type="submit" value="Jetzt einchecken" />
         </form>
     </div>
 {% endblock %}
-{% block footer %}
-    {% include '_footer.html.jinja2' %}
-    <script type=text/javascript src="{{ url_for('static', filename='javascript/main.js') }}"></script>
+
+{% block scripts %}
+    <script
+        type=text/javascript
+        src="{{ url_for('static', filename='javascript/main.js') }}"
+    ></script>
 {% endblock %}
