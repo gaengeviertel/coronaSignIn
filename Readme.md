@@ -125,6 +125,13 @@ regulations, but we are no legal professional and this document contains **no le
 the data protection template provides **no guarantees at all**, including for
 correctness of information.
 
+#### Impressum
+To link to your website's impressum update the `#` in the following line of the footer template with your URL link:
+```
+<a href="#" target="_blank">Impressum</a>
+/src/templates/_footer.html.jinja2
+```
+
 #### Form, Success & Error Page
 To customise the headlines and description texts for the form, the success page and the error page you will need to edit the text in the respective template files:
 
