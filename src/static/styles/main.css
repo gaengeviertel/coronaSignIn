@@ -122,12 +122,13 @@ a:focus {
   margin: 1.5rem auto;
   display: flex;
   justify-content: center;
+  align-items: center;
   flex-direction: column;
 }
 
 .logo {
-  height: 6rem;
-  width: 100%;
+  height: 4rem;
+  width: auto;
 }
 
 .contact-form-container {
@@ -166,15 +167,7 @@ a:focus {
   height: 12.5rem;
   display: flex;
   justify-content: center;
-}
-
-.image-container > img {
-  height: 9.5rem;
-  margin: 0 1rem;
-}
-
-.image-container > img:nth-child(2) {
-  align-self: flex-end;
+  background: url("../images/success.jpg") no-repeat center;
 }
 
 .error-container {
