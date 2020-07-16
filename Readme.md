@@ -111,6 +111,31 @@ podman exec corona-sign-in-db \
     > "corona-sign-in-$(date -I -d '28 days ago')-to-$(date -I).csv"
 ```
 
+## Customise Content & Look
+
+### Images
+You will be able to customize the application with your images by only replacing and adding image files. There's no need to change template or stylesheet code unless you want to do so. 
+
+You can add your Logo to the header section of the form and success page by replacing the following file:
+```
+/src/static/images/logo.jpg
+```
+
+If you want to add an image to the success page, which will be shown to the user after they successfully submitted the form, you can do so by adding the following file:
+```
+/src/static/images/success.jpg
+```
+
+If you want to customise the image on the error page, you can do so by replacing the following file:
+```
+/src/static/images/error.jpg
+```
+
+To add a [favicon](https://en.wikipedia.org/wiki/Favicon) to the web pages you can add the following file:
+```
+/src/static/images/favicon.ico
+```
+
 ## Dev Setup
 
 The application requires Python version 3.8.
