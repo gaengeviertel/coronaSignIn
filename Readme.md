@@ -173,6 +173,12 @@ To add a [favicon](https://en.wikipedia.org/wiki/Favicon) to the web pages you c
 /src/static/images/favicon.ico
 ```
 
+### Color
+In order to customise the primary color used for headlines, buttons and links replace all occurences of the value `darkseagreen` with your preferred color value (keyword (e.g. `lime`), hex code (e.g. `#00FF00`) or rgb decimal code (e.g `rgb(0,255,0)`)) in the following file:
+```
+/src/static/styles/main.css
+```
+
 ## Dev Setup
 
 The application requires Python version 3.8.
