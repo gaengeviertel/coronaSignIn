@@ -113,6 +113,36 @@ podman exec corona-sign-in-db \
 
 ## Customise Content & Look
 
+### Content
+#### Data Protection Policy
+To comply with GDPR regulations an entity that operates a website or application, which collects and processes personal data, needs to provide a data protection policy. To match the look & feel of the application you can add the contents of your data protection policy inside the `{% block content %}` section of this template file: 
+```
+/src/templates/data-protection.html.jinja2
+```
+
+**IMPORTANT**: As already mentioned at the beginning, this document contains suggestions on how to deal with legal
+regulations, but we are no legal professional and this document contains **no legal advise**. Just as the rest of this software,
+the data protection template provides **no guarantees at all**, including for
+correctness of information.
+
+#### Form, Success & Error Page
+To customise the headlines and description texts for the form, the success page and the error page you will need to edit the text in the respective template files:
+
+Form (Main Page): 
+```
+/src/templates/index.html.jinja2
+```
+
+Success Page: 
+```
+/src/templates/success-page.html.jinja2
+```
+
+Error Page: 
+```
+/src/templates/error-page.html.jinja2
+```
+
 ### Images
 You will be able to customize the application with your images by only replacing and adding image files. There's no need to change template or stylesheet code unless you want to do so. 
 
