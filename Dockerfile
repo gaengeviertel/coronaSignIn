@@ -4,7 +4,7 @@
 FROM python:3.8 as mkrequirementstxt
 RUN pip install pipenv
 WORKDIR /workdir
-COPY Pipfile Pipfile.lock .
+COPY Pipfile Pipfile.lock ./
 RUN pipenv lock -r > requirements.txt
 
 
