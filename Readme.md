@@ -1,4 +1,4 @@
-![CI](https://github.com/voidus/coronaSignIn/workflows/CI/badge.svg)
+![CI](https://github.com/gaengeviertel/coronaSignIn/workflows/CI/badge.svg)
 # Simple Sign-In system to comply with Hamburg, Germany corona regulations
 
 As of July 2020, Hamburg (Germany) requires bars, pubs and the like to record
@@ -18,7 +18,7 @@ unacceptable risk for you.
 The application will write the data into an PostgreSQL database. At the moment
 we only officially support deployment on podman, but we assume that docker and
 platforms such as kubernetes should work fine. If you are interested in running
-this application and need any support, don't hesitate to [create an issue](https://github.com/voidus/coronaSignIn/issues)
+this application and need any support, don't hesitate to [create an issue](https://github.com/gaengeviertel/coronaSignIn/issues)
 
 ## Deployment
 
@@ -39,7 +39,7 @@ podman exec corona-sign-in-app \
 ```
 
 If you struggle with setting things up and require more instructions, please
-[let us know](https://github.com/voidus/coronaSignIn/issues).
+[let us know](https://github.com/gaengeviertel/coronaSignIn/issues).
 
 ### Production Checklist
 
