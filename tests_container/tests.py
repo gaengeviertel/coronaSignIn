@@ -1,4 +1,5 @@
 import http.client
+import os
 import socket
 import subprocess
 import time
@@ -10,6 +11,10 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
 # These variables have to be in sync with the test_container/pod.yml
+use_existing_image = (
+    os.environ.get("CORONA_SIGN_IN_TEST_USE_EXISTING_IMAGE") is not None
+)
+
 app_image_name = "corona-sign-in-automatic-test"
 pod_name = "corona-sign-in-automatic-test"
 
@@ -56,7 +61,8 @@ def running_pod(container_names):
     upgrade_db = f"podman exec {container_names.app} flask db upgrade".split()
 
     try:
-        subprocess.run(build_image_command, check=True)
+        if not use_existing_image:
+            subprocess.run(build_image_command, check=True)
         subprocess.run(remove_pod_if_it_exists, check=True)
         subprocess.run(run_pod, check=True)
 

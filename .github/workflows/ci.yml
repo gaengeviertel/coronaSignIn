@@ -4,6 +4,9 @@ on:
   - push
   - pull_request
 
+env:
+  IMAGE_NAME: coronasignin
+
 jobs:
   test:
     name: Tests
@@ -19,11 +22,101 @@ jobs:
       - name: Install pipenv
         uses: dschep/install-pipenv-action@v1
 
+      - name: Cache python dependencies
+        uses: actions/cache@v1
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('Pipfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
       - name: Install dependencies
         run: pipenv install --dev
 
       - name: Test with pytest
         run: pipenv run pytest -v
 
-      - name: Test the built docker image
-        run: pipenv run invoke containertests
+  build-image:
+    name: Build a docker image
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Cache intermediate images
+        uses: actions/cache@v1
+        with:
+          path: ~/.local/share/containers
+          key: ${{ runner.os }}-podman-${{ hashFiles('Pipfile.lock') }}-${{ hashFiles('Dockerfile') }}
+          restore-keys: |
+            ${{ runner.os }}-podman-
+
+      - name: Build the image
+        run: podman build -t ${IMAGE_NAME} .
+
+      - name: Export the image to a file
+        run: podman image save -o container-image.tar ${IMAGE_NAME}
+
+      - name: Upload the image archive as an artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: container-image
+          path: container-image.tar
+
+  containertests:
+    name: Runs container tests on the image
+    runs-on: ubuntu-latest
+    needs: build-image
+    steps:
+      - name: Get the image from the artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: container-image
+
+      - name: Load the image into podman
+        # The image name here needs to match the one used in the tests
+        run: podman image load -i container-image.tar corona-sign-in-automatic-test
+
+      - uses: actions/checkout@v1
+
+      - name: Set up python 3.8
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.8
+
+      - name: Install pipenv
+        uses: dschep/install-pipenv-action@v1
+
+      - name: Cache python dependencies
+        uses: actions/cache@v1
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('Pipfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install dependencies
+        run: pipenv install --dev
+
+      - name: Run the container test
+        run: env CORONA_SIGN_IN_TEST_USE_EXISTING_IMAGE=true pipenv run invoke containertests
+
+  publish-image:
+    name: publish_image
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: containertests
+    steps:
+      - name: Get the image from the artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: container-image
+
+      - name: Load the image into podman
+        run: podman image load -i container-image.tar ${IMAGE_NAME}
+
+      - name: Log into dockerhub
+        run: podman login --tls-verify -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }} docker.io
+
+      - name: Push the image to dockerhub
+        run: podman push ${IMAGE_NAME} docker.io/${{ secrets.DOCKER_USERNAME }}/${IMAGE_NAME}:"${GITHUB_REF#refs/tags/v}"
