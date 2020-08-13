@@ -10,4 +10,5 @@ def makeSignInData(**overrides):
         "street_and_house_number": f"{fake.street_name()} {fake.building_number()}",
         "plz_and_city": f"{fake.random_int(10000, 99999)} {fake.city()}",
         "phone_number": fake.phone_number(),
+        **overrides,
     }

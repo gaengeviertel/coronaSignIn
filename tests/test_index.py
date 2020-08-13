@@ -1,4 +1,5 @@
 import json
+from base64 import b64encode
 from datetime import datetime, timedelta
 
 import requests
@@ -40,6 +41,44 @@ def test_error_page(broken_app, client):
     assert b"Uups..." in page.data
 
 
+def test_location_options(app, client):
+    try:
+        app.config["LOCATIONS"] = ["garden", "balcony"]
+        page = client.get("/")
+        html = BeautifulSoup(page.data, "html.parser")
+        select = html.find("select", attrs={"name": "location"})
+        assert select
+        assert [(o.attrs["value"], o.text) for o in select.find_all("option")] == [
+            ("", "Bitte Auswählen"),
+            (b64encode(b"garden").decode(), "garden"),
+            (b64encode(b"balcony").decode(), "balcony"),
+        ]
+    finally:
+        app.config["LOCATIONS"] = None
+
+
+def test_no_location_field_if_not_set(app, client):
+    app.config["LOCATIONS"] = []
+    page = client.get("/")
+    html = BeautifulSoup(page.data, "html.parser")
+    assert not html.find("select", attrs={"name": "location"})
+
+
+def test_submitting_location_works(app, client, db_session):
+    try:
+        app.config["LOCATIONS"] = ["The Pool", "The Bar"]
+        page = client.post("/", data=makeSignInData(location=b64encode(b"The Pool")))
+        assert page.location.endswith("/thank-you")
+
+        sign_in_locations = db.session.execute(
+            select([sign_ins.table.c.location])
+        ).fetchall()
+
+        assert sign_in_locations == [("The Pool",)]
+    finally:
+        app.config["LOCATIONS"] = None
+
+
 def test_db(app, db_session):
     # This test is not used yet, but it shows that the db_session works. Let's keep it
     # around until we use the db in another test
@@ -59,6 +98,7 @@ def test_db(app, db_session):
 
     assert len(results) == 1
     assert results[0].items() == [
+        ("location", None),
         ("first_name", "f"),
         ("last_name", "l"),
         ("street_and_house_number", "example lane 42"),

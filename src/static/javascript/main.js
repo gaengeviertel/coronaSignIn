@@ -13,7 +13,7 @@ window.onload = function () {
     "last_name",
     "street_and_house_number",
     "plz_and_city",
-    "phone_number"
+    "phone_number",
   ];
 
   if (storedData !== null && typeof storedData === "object") {
