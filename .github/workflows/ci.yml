@@ -27,3 +27,6 @@ jobs:
 
       - name: Test the built docker image
         run: pipenv run invoke containertests
+
+      - name: Test the docker-compose file
+        run: pipenv run pytest -v -s tests_docker-compose
