@@ -4,14 +4,14 @@ services:
     build: .
     ports:
       - "8080:8080"
-    environment: 
-      CORONA_SIGN_IN_DATABASE_URI: postgresql://corona-sign-in:pass@localhost/corona-sign-in
+    environment:
+      CORONA_SIGN_IN_DATABASE_URI: postgresql://corona-sign-in:pass@corona-sign-in-db/corona-sign-in
       CORONA_SIGN_IN_SECRET_KEY: irrelevant
   corona-sign-in-db:
     image: "postgres:12"
     volumes:
       - corona-sign-in-db:/var/lib/postgresql/data
-    environment: 
+    environment:
       PGDATA: /var/lib/postgresql/data
       POSTGRES_USER: corona-sign-in
       POSTGRES_PASSWORD: pass
