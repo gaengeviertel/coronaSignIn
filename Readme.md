@@ -111,6 +111,74 @@ podman exec corona-sign-in-db \
     > "corona-sign-in-$(date -I -d '28 days ago')-to-$(date -I).csv"
 ```
 
+## Customise Content & Look
+
+### Content
+#### Data Protection Policy
+To comply with GDPR regulations an entity that operates a website or application, which collects and processes personal data, needs to provide a data protection policy. To match the look & feel of the application you can add the contents of your data protection policy inside the `{% block content %}` section of this template file: 
+```
+/src/templates/data-protection.html.jinja2
+```
+
+**IMPORTANT**: As already mentioned at the beginning, this document contains suggestions on how to deal with legal
+regulations, but we are no legal professional and this document contains **no legal advise**. Just as the rest of this software,
+the data protection template provides **no guarantees at all**, including for
+correctness of information.
+
+#### Impressum
+To link to your website's impressum update the `#` in the following line of the footer template with your URL link:
+```
+<a href="#" target="_blank">Impressum</a>
+/src/templates/_footer.html.jinja2
+```
+
+#### Form, Success & Error Page
+To customise the headlines and description texts for the form, the success page and the error page you will need to edit the text in the respective template files:
+
+Form (Main Page): 
+```
+/src/templates/index.html.jinja2
+```
+
+Success Page: 
+```
+/src/templates/success-page.html.jinja2
+```
+
+Error Page: 
+```
+/src/templates/error-page.html.jinja2
+```
+
+### Images
+You will be able to customize the application with your images by only replacing and adding image files. There's no need to change template or stylesheet code unless you want to do so. 
+
+You can add your Logo to the header section of the form and success page by replacing the following file:
+```
+/src/static/images/logo.jpg
+```
+
+If you want to add an image to the success page, which will be shown to the user after they successfully submitted the form, you can do so by adding the following file:
+```
+/src/static/images/success.jpg
+```
+
+If you want to customise the image on the error page, you can do so by replacing the following file:
+```
+/src/static/images/error.jpg
+```
+
+To add a [favicon](https://en.wikipedia.org/wiki/Favicon) to the web pages you can add the following file:
+```
+/src/static/images/favicon.ico
+```
+
+### Color
+In order to customise the primary color used for headlines, buttons and links replace all occurences of the value `darkseagreen` with your preferred color value (keyword (e.g. `lime`), hex code (e.g. `#00FF00`) or rgb decimal code (e.g `rgb(0,255,0)`)) in the following file:
+```
+/src/static/styles/main.css
+```
+
 ## Dev Setup
 
 The application requires Python version 3.8.
