@@ -36,7 +36,9 @@ spec:
           value: postgresql://corona-sign-in:pass@localhost/corona-sign-in
         - name: CORONA_SIGN_IN_SECRET_KEY
           value: irrelevant
-      ports: 
+        - name: CORONA_SIGN_IN_LOCATIONS
+          value: Balcony;Hacienda
+      ports:
         - containerPort: 8080
           hostPort: 8080
           protocol: tcp
