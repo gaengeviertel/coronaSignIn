@@ -19,7 +19,11 @@ def create_app(config=None):
 
     @app.route("/", methods=("GET", "POST"))
     def index():
-        form = sign_ins.Form()
+        locations = app.config["LOCATIONS"]
+        if locations:
+            form = sign_ins.FormWithLocation(locations)
+        else:
+            form = sign_ins.Form()
         if form.validate_on_submit():
             db.session.execute(
                 sign_ins.table.insert().values(**form.data, signed_in_at=datetime.now())

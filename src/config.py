@@ -12,6 +12,14 @@ class ProductionConfig:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     """ This makes a deprecation warning go away. It doesn't change behaviour"""
 
+    @property
+    def LOCATIONS(self):
+        locations_raw = os.environ.get("CORONA_SIGN_IN_LOCATIONS")
+        if locations_raw:
+            return [s.strip() for s in locations_raw.split(";")]
+        else:
+            return None
+
 
 class TestConfig(ProductionConfig):
     ENV = "test"
@@ -19,3 +27,4 @@ class TestConfig(ProductionConfig):
     SQLALCHEMY_DATABASE_URI = (
         f"sqlite:///{os.path.dirname(os.path.dirname(__file__))}/testing.sqlite"
     )
+    LOCATIONS = None

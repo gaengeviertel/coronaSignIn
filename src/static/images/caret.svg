@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   inkscape:version="1.0 (4035a4fb49, 2020-05-01)"
+   sodipodi:docname="caret.svg"
+   version="1.1"
+   id="svg919"
+   width="8.4328003"
+   height="5.4206915"
+   viewBox="0 0 8.4328001 5.4206914">
+  <sodipodi:namedview
+     inkscape:current-layer="svg919"
+     inkscape:window-maximized="0"
+     inkscape:window-y="33"
+     inkscape:window-x="1174"
+     inkscape:cy="2.2910256"
+     inkscape:cx="5.3530352"
+     inkscape:zoom="71.262622"
+     showgrid="false"
+     id="namedview7"
+     inkscape:window-height="1405"
+     inkscape:window-width="2262"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0"
+     guidetolerance="10"
+     gridtolerance="10"
+     objecttolerance="10"
+     borderopacity="1"
+     bordercolor="#666666"
+     pagecolor="#ffffff" />
+  <metadata
+     id="metadata925">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs923" />
+  <path
+     d="M 0,1.2042913 3.0121092,4.2164004 4.2164003,5.4206917 5.4206915,4.2164004 8.4328008,1.2042913 7.2285094,0 4.2164003,3.0121092 1.2042913,0 Z"
+     style="fill:#000000;fill-opacity:1;stroke-width:2.32898"
+     id="rect832" />
+</svg>

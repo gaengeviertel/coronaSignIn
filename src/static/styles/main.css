@@ -19,7 +19,8 @@ form {
 }
 
 input,
-textarea {
+textarea,
+select {
   box-sizing: border-box;
   background: none;
   background-color: white;
@@ -65,8 +66,28 @@ input[type="submit"]:hover {
 }
 
 input.has_error,
-textarea.has_error {
+textarea.has_error,
+select.has_error {
   border: 1px solid #e31d17;
+}
+
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url("../images/caret.svg");
+    background-repeat: no-repeat;
+    background-size: 13px 8px;
+    background-position-y: calc(50% - 3px);
+    background-position-x: calc(100% - 10px);
+    padding-right: 32px;
+}
+
+select:invalid {
+    color: #999999;
+}
+select[required] > option[value=""] {
+    display: none;
 }
 
 .errors {

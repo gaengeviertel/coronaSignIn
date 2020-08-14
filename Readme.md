@@ -5,6 +5,8 @@ As of July 2020, Hamburg (Germany) requires bars, pubs and the like to record
 the names and contact data for all visitors to help with COVID-19 contact
 tracing. This application allows guests to fill in their data on their phones.
 
+We also support multiple sub-locations. See the section "Locations" below.
+
 **IMPORTANT**: This document contains suggestions on how to deal with this
 regulation, but we are no legal professional. Just as the rest of this software,
 this document is provided *as-is*, with **no guarantees at all**, including for
@@ -110,6 +112,19 @@ podman exec corona-sign-in-db \
     --csv --command 'SELECT * FROM sign_ins;' \
     > "corona-sign-in-$(date -I -d '28 days ago')-to-$(date -I).csv"
 ```
+
+## Locations
+
+If your space is separated into multiple parts where people don't really
+interact with each other, you can configure the software to include a location
+selection. Guests will then have to select one.
+
+The selected location will be stored with the entry in the database. There is
+still a single table, so you can switch this feature on and off as needed.
+
+To use it, set the CORONA_SIGN_IN_LOCATIONS environment variable to
+a semicolon-separated list of your locations, e.g.
+CORONA_SIGN_IN_LOCATIONS="Garden;Library;Cafe".
 
 ## Dev Setup
 

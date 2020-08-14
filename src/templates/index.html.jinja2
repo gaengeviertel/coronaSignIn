@@ -17,6 +17,9 @@
     <div class="contact-form-container">
         <form method=POST action novalidate>
             {{ form.csrf_token }}
+            {% if form.location %}
+                {{ render_field(form.location) }}
+            {% endif %}
             {{ render_field(form.first_name) }}
             {{ render_field(form.last_name) }}
             {{ render_field(form.street_and_house_number) }}
