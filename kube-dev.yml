@@ -42,16 +42,9 @@ spec:
         - containerPort: 8080
           hostPort: 8080
           protocol: tcp
-      volumeMounts:
-        - name: data
-          mountPath: /app
 
   volumes:
     - name: db
       hostPath:
         path: corona-sign-in-db
-        type: Directory
-    - name: data
-      hostPath:
-        path: corona-sign-in-data
         type: Directory
