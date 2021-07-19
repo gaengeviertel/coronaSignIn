@@ -77,6 +77,9 @@ jobs:
         # The image name here needs to match the one used in the tests
         run: podman image load -i container-image.tar
 
+      - name: Tag the image with the name the tests expect
+        run: podman tag ${IMAGE_NAME} corona-sign-in-automatic-test
+
       - name: List images
         run: podman images list
 
