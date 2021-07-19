@@ -75,7 +75,10 @@ jobs:
 
       - name: Load the image into podman
         # The image name here needs to match the one used in the tests
-        run: podman image load -i container-image.tar corona-sign-in-automatic-test
+        run: podman image load -i container-image.tar
+
+      - name: List images
+        run: podman images list
 
       - uses: actions/checkout@v1
 
