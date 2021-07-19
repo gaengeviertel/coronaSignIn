@@ -9,7 +9,7 @@ pytest = "*"
 pytest-testmon = "*"
 pytest-watch = "*"
 pytest-flask = "*"
-black = "==19.10b0"
+black = "==21.7b0"
 selenium = "*"
 pytest-selenium = "*"
 pytest-flask-sqlalchemy = "*"
@@ -24,5 +24,10 @@ flask-wtf = "*"
 flask-sqlalchemy = "*"
 flask-migrate = "*"
 
+# pytest-flask-sqlalchemy is broken with sqlalchemy~=1.4.
+# We don't usually need this as an explicit dependency, but let's keep it here until
+# https://github.com/jeancochrane/pytest-flask-sqlalchemy/issues/50 is resolved.
+sqlalchemy = "==1.4.*"
+
 [requires]
-python_version = "3.8"
+python_version = "3.9"
