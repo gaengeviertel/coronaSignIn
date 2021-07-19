@@ -128,7 +128,7 @@ CORONA_SIGN_IN_LOCATIONS="Garden;Library;Cafe".
 
 ## Dev Setup
 
-The application requires Python version 3.8.
+The application requires Python version 3.9.
 With `direnv` installed, you only need to install pipenv and then you're set.
 
 Otherwise, you need to install `pipenv` first. Then, install the dependencies

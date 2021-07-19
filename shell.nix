@@ -2,7 +2,6 @@
 
 pkgs.mkShell {
   buildInputs = with pkgs; [
-    python38
-    pipenv
+    python39.withPackages (ps: [ps.pipenv]) {}
   ];
 }

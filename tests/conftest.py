@@ -7,6 +7,7 @@ from config import TestConfig
 
 # This is needed to make the tests work on py3.8 + macOS catalina
 # See https://github.com/pytest-dev/pytest-flask/issues/104
+# TODO: Verify if we still need this with python 3.9
 multiprocessing.set_start_method("fork")
 
 
