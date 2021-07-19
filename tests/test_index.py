@@ -57,6 +57,39 @@ def test_location_options(app, client):
         app.config["LOCATIONS"] = None
 
 
+def test_returns_400_on_unknown_location(app, client):
+    try:
+        app.config["LOCATIONS"] = ["Garden", "Balcony"]
+        page = client.get("/?location=asdf")
+        assert page.status_code == 400
+    finally:
+        app.config["LOCATIONS"] = None
+
+
+def test_preselects_location_from_GET(app, client):
+    try:
+        app.config["LOCATIONS"] = ["Garden", "Balcony"]
+        page = client.get("/?location=Garden")
+        html = BeautifulSoup(page.data, "html.parser")
+        select = html.find("select", attrs={"name": "location"})
+        selected_options = select.find_all("option", selected=True)
+        assert [o.text for o in selected_options] == ["Garden"]
+    finally:
+        app.config["LOCATIONS"] = None
+
+
+def test_preselects_location_accepts_urlencoding(app, client):
+    try:
+        app.config["LOCATIONS"] = ["Garden", "Balcony", "here&there"]
+        page = client.get("/?location=here%26there")
+        html = BeautifulSoup(page.data, "html.parser")
+        select = html.find("select", attrs={"name": "location"})
+        selected_options = select.find_all("option", selected=True)
+        assert [o.text for o in selected_options] == ["here&there"]
+    finally:
+        app.config["LOCATIONS"] = None
+
+
 def test_no_location_field_if_not_set(app, client):
     app.config["LOCATIONS"] = []
     page = client.get("/")

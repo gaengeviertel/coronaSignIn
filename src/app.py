@@ -1,7 +1,7 @@
 import sys
 from datetime import datetime
 
-from flask import Flask, redirect, render_template
+from flask import Flask, redirect, render_template, request
 
 import sign_ins
 from config import ProductionConfig
@@ -22,6 +22,12 @@ def create_app(config=None):
         locations = app.config["LOCATIONS"]
         if locations:
             form = sign_ins.FormWithLocation(locations)
+            preselected_location = request.args.get("location")
+            if preselected_location:
+                try:
+                    form.set_location(preselected_location)
+                except ValueError:
+                    return f'Location "{preselected_location}" does not exist', 400
         else:
             form = sign_ins.Form()
         if form.validate_on_submit():

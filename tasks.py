@@ -17,3 +17,8 @@ def test(c):
 @task
 def containertests(c):
     c.run("pytest tests_container")
+
+
+@task
+def run(c):
+    c.run("flask run")

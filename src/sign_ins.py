@@ -55,6 +55,15 @@ class FormWithLocation(Form):
         data["location"] = b64decode(data["location"]).decode("utf-8")
         return data
 
+    def set_location(self, location: str):
+        try:
+            location_value = next(
+                value for (value, label) in self.location.choices if label == location
+            )
+        except StopIteration:
+            raise ValueError(f'Location "{location}" not found')
+        self.location.data = location_value
+
     location = SelectField(
         "Ort",
         validators=[DataRequired(message="Bitte wähle aus von wo du eincheckst")],

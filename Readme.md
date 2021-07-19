@@ -126,6 +126,11 @@ To use it, set the CORONA_SIGN_IN_LOCATIONS environment variable to
 a semicolon-separated list of your locations, e.g.
 CORONA_SIGN_IN_LOCATIONS="Garden;Library;Cafe".
 
+When locations are set up, you can add a "location" GET parameter to pre-fill
+the location field, e.g. https://corona-sign-in.your.server/?location=Garden
+
+This could be useful if you want to put up posters with QR codes.
+
 ## Dev Setup
 
 The application requires Python version 3.9.
