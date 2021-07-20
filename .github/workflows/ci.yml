@@ -119,7 +119,7 @@ jobs:
           name: container-image
 
       - name: Load the image into podman
-        run: podman image load -i container-image.tar ${IMAGE_NAME}
+        run: podman image load -i container-image.tar
 
       - name: Log into dockerhub
         run: podman login --tls-verify -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }} docker.io
