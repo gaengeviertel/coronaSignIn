@@ -52,7 +52,12 @@ class FormWithLocation(Form):
     @property
     def data(self):
         data = super().data
-        data["location"] = b64decode(data["location"]).decode("utf-8")
+        try:
+            data["location"] = next(
+                label for (value, label) in self.location.choices if value == self.location.data
+            )
+        except StopIteration:
+            raise ValueError(f'Location id "{self.location.data}" not resolved')
         return data
 
     def set_location(self, location: str):
