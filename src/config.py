@@ -7,7 +7,7 @@ class ProductionConfig:
 
     @property
     def SQLALCHEMY_DATABASE_URI(self):
-        return os.environ["CORONA_SIGN_IN_DATABASE_URI"]
+        return os.environ.get("CORONA_SIGN_IN_DATABASE_URI")
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     """ This makes a deprecation warning go away. It doesn't change behaviour"""

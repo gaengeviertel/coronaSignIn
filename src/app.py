@@ -1,4 +1,4 @@
-import sys
+import os
 from datetime import datetime
 
 from flask import Flask, redirect, render_template, request
@@ -13,6 +13,8 @@ def create_app(config=None):
     app = Flask(__name__)
 
     app.config.from_object(config if config else ProductionConfig())
+    if os.environ.get("CORONA_SIGN_IN_CONFIG"):
+        app.config.from_envvar("CORONA_SIGN_IN_CONFIG")
 
     db.init_app(app)
     migrate.init_app(app, db)
