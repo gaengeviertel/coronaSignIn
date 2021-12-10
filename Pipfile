@@ -27,7 +27,7 @@ flask-migrate = "*"
 # pytest-flask-sqlalchemy is broken with sqlalchemy~=1.4.
 # We don't usually need this as an explicit dependency, but let's keep it here until
 # https://github.com/jeancochrane/pytest-flask-sqlalchemy/issues/50 is resolved.
-sqlalchemy = "==1.3.*"
+sqlalchemy = "==1.4.*"
 
 [requires]
 python_version = "3.9"
