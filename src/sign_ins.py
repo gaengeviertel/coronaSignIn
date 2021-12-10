@@ -45,8 +45,7 @@ class FormWithLocation(Form):
     def __init__(self, locations):
         super().__init__()
         self.location.choices = [("", "Bitte Auswählen")] + [
-            (b64encode(location.encode("utf-8")).decode("utf-8"), location)
-            for location in locations
+            (id, location.name) for id, location in locations.items()
         ]
 
     @property
