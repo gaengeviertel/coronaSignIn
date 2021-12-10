@@ -1,0 +1,14 @@
+{% extends "layout.html.jinja2" %}
+
+{% block title %}Corona-Warn-App{% endblock %}
+
+{% block headercontent %}
+  <h1 class="highlight">{{location}}</h1>
+{% endblock %}
+
+{% block content %}
+  <span class="description">Corona-Warn-App Check-in</span>
+  <div class="qr-code-container">
+    <img src="{{ qr_code }}"/>
+  </div>
+{% endblock %}

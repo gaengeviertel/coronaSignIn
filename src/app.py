@@ -1,7 +1,7 @@
 import os
 from datetime import datetime
 
-from flask import Flask, redirect, render_template, request, url_for
+from flask import Flask, redirect, render_template, request, Response, url_for
 
 from typing import Optional, Union
 
@@ -13,6 +13,8 @@ from slugify import slugify
 from hashlib import md5
 import cwa_qr
 from cwa_qr import CwaLocation
+from io import BytesIO
+import qrcode.image.svg
 
 class Location:
     name: str
@@ -87,6 +89,17 @@ class Location:
         except TypeError:
             return None
 
+    def cwa_qr_code(self):
+        try:
+            ev = self.cwa_event()
+            qr = cwa_qr.generate_qr_code(ev)
+        except TypeError:
+            return None
+        svg = qr.make_image(image_factory=qrcode.image.svg.SvgPathFillImage)
+        buf = BytesIO()
+        svg.save(buf)
+        return buf.getvalue()
+
 
 def create_app(config=None):
     app = Flask(__name__)
@@ -140,6 +153,23 @@ def create_app(config=None):
             return render_template("error-page.html.jinja2", error="Invalid location"), 400
 
         return render_template("success-page.html.jinja2", cwa_url=location.cwa_url())
+
+    @app.route("/cwa/<location_id>/qr-code.svg")
+    def cwa_qr_code(location_id):
+        location = locations.get(location_id)
+        if not location:
+            return render_template("error-page.html.jinja2", error="Location not found"), 404
+
+        return Response(location.cwa_qr_code(), mimetype="image/svg+xml")
+
+    @app.route("/cwa/<location_id>")
+    def cwa(location_id):
+        location = locations.get(location_id)
+        if not location:
+            return render_template("error-page.html.jinja2", error="Location not found"), 404
+
+        return render_template("cwa-page.html.jinja2", location=location.name,
+                               qr_code=url_for('.cwa_qr_code', location_id=location.id))
 
     @app.errorhandler(500)
     def internal_server_error(e):

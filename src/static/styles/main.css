@@ -214,3 +214,8 @@ a:focus {
   height: auto;
   margin: 0.5rem;
 }
+
+.qr-code-container {
+  display: flex;
+  justify-content: center;
+}
