@@ -45,14 +45,18 @@ class FormWithLocation(Form):
     def __init__(self, locations):
         super().__init__()
         self.location.choices = [("", "Bitte Auswählen")] + [
-            (b64encode(location.encode("utf-8")).decode("utf-8"), location)
-            for location in locations
+            (id, location.name) for id, location in locations.items()
         ]
 
     @property
     def data(self):
         data = super().data
-        data["location"] = b64decode(data["location"]).decode("utf-8")
+        try:
+            data["location"] = next(
+                label for (value, label) in self.location.choices if value == self.location.data
+            )
+        except StopIteration:
+            raise ValueError(f'Location id "{self.location.data}" not resolved')
         return data
 
     def set_location(self, location: str):

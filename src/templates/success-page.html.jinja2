@@ -6,6 +6,15 @@
   <h1 class="highlight">Danke</h1>
   <h2>Viel Spaß im Gängeviertel!</h2>
   <span class="description">Dein Eintrag wurde in unserer Datenbank gespeichert.</span>
+  {% if cwa_url %}
+    <div class="description">
+      Falls Sie die Corona-Warn-App verwenden können Sie sich über diesen
+      <div>
+        <a href="{{cwa_url}}">Link für die Veranstaltung einchecken.</a>
+      </div>
+      Sollte bei einem Teilnehmer dieser Veranstalltung SARS-CoV-2 nachgewiesen werden, erfolgt eine Warnung über die App schelller als es über die Kontakterfassung durch das Gesundheitsamt möglich ist.
+    </div>
+  {% endif %}
 {% endblock %}
 
 {% block content %}

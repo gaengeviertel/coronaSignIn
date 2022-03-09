@@ -160,6 +160,7 @@ a:focus {
   font-size: 1rem;
   text-align: center;
   display: block;
+  margin: 0.5rem 0;
 }
 
 .footer-container {
@@ -212,4 +213,9 @@ a:focus {
   width: 4rem;
   height: auto;
   margin: 0.5rem;
+}
+
+.qr-code-container {
+  display: flex;
+  justify-content: center;
 }
